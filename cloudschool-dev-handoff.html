@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CloudSchool DS — Developer Handoff</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #0f0f0f;
+  --bg-2:       #141414;
+  --bg-3:       #1a1a1a;
+  --bg-4:       #222222;
+  --border:     #262626;
+  --border-2:   #2e2e2e;
+  --text:       #e8e8e8;
+  --text-2:     #888;
+  --text-3:     #555;
+  --brand:      #3D52E5;
+  --brand-dim:  rgba(61,82,229,0.15);
+  --green:      #22c55e;
+  --yellow:     #f59e0b;
+  --red:        #ef4444;
+  --blue:       #3b82f6;
+  --purple:     #a78bfa;
+  --cyan:       #22d3ee;
+  --orange:     #fb923c;
+
+  --f-sans: 'DM Sans', system-ui, sans-serif;
+  --f-mono: 'DM Mono', 'Fira Code', monospace;
+  --sidebar-w: 240px;
+  --topbar-h: 52px;
+}
+[data-theme="light"] {
+  --bg: #fafafa; --bg-2: #f4f4f5; --bg-3: #e4e4e7; --bg-4: #d4d4d8;
+  --border: #e4e4e7; --border-2: #d4d4d8;
+  --text: #09090b; --text-2: #52525b; --text-3: #a1a1aa;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--f-sans); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w); height: 100vh; position: fixed;
+  background: var(--bg-2); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow-y: auto; z-index: 10;
+}
+.sidebar-logo {
+  height: var(--topbar-h); display: flex; align-items: center;
+  gap: 10px; padding: 0 18px; border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.logo-mark {
+  width: 24px; height: 24px; border-radius: 5px; background: var(--brand);
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-mark svg { width: 13px; height: 13px; fill: white; }
+.logo-text { font-size: 14px; font-weight: 600; letter-spacing: -0.3px; }
+.logo-text span { color: var(--brand); }
+.sidebar-version {
+  padding: 10px 18px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.version-tag {
+  font-family: var(--f-mono); font-size: 10px;
+  background: var(--brand-dim); color: var(--brand);
+  padding: 2px 7px; border-radius: 999px; font-weight: 500;
+}
+.sidebar-nav { padding: 8px 10px; flex: 1; }
+.nav-section { font-size: 10px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: var(--text-3); padding: 12px 8px 6px; }
+.nav-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 8px; border-radius: 6px;
+  color: var(--text-2); font-size: 13px; cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  margin-bottom: 1px;
+  text-decoration: none;
+}
+.nav-link:hover { background: var(--bg-3); color: var(--text); }
+.nav-link.active { background: var(--brand-dim); color: var(--brand); font-weight: 500; }
+.nav-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* MAIN */
+.main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
+.topbar {
+  height: var(--topbar-h); background: var(--bg-2); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 32px; gap: 12px;
+  position: sticky; top: 0; z-index: 9;
+}
+.topbar-title { font-size: 14px; font-weight: 600; flex: 1; }
+.topbar-search {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg-3); border: 1px solid var(--border);
+  border-radius: 6px; padding: 0 10px; height: 30px;
+  font-size: 12px; color: var(--text-2);
+}
+.topbar-search input { background: transparent; border: none; outline: none; color: var(--text); font-size: 12px; font-family: var(--f-sans); width: 180px; }
+.topbar-search input::placeholder { color: var(--text-3); }
+.theme-toggle {
+  width: 28px; height: 28px; border-radius: 6px; background: var(--bg-3);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-2); transition: background 0.15s;
+}
+.theme-toggle:hover { background: var(--bg-4); color: var(--text); }
+.theme-toggle svg { width: 14px; height: 14px; }
+.content { padding: 40px 48px; max-width: 900px; }
+
+/* SECTION HEADERS */
+.section-anchor { scroll-margin-top: calc(var(--topbar-h) + 24px); }
+.section-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--brand); margin-bottom: 8px;
+}
+.section-title { font-size: 22px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 6px; }
+.section-desc { font-size: 14px; color: var(--text-2); line-height: 1.65; margin-bottom: 28px; }
+.divider { height: 1px; background: var(--border); margin: 48px 0; }
+
+/* CODE BLOCKS */
+.code-block {
+  background: #0a0a0a; border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden; margin: 12px 0;
+  position: relative;
+}
+[data-theme="light"] .code-block { background: #1a1a1a; }
+.code-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px; border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+.code-lang { font-family: var(--f-mono); font-size: 10px; color: var(--text-3); letter-spacing: 1px; text-transform: uppercase; }
+.code-copy {
+  font-size: 11px; color: var(--text-3); cursor: pointer; padding: 2px 8px;
+  border-radius: 4px; border: 1px solid var(--border);
+  transition: all 0.15s; background: none; font-family: var(--f-sans);
+}
+.code-copy:hover { color: var(--text); border-color: var(--border-2); }
+.code-copy.copied { color: var(--green); border-color: rgba(34,197,94,0.4); }
+pre { padding: 16px 18px; overflow-x: auto; font-family: var(--f-mono); font-size: 12px; line-height: 1.75; }
+/* Syntax highlight */
+.k { color: var(--purple); } /* keyword */
+.s { color: var(--green); }  /* string */
+.v { color: var(--cyan); }   /* value/var */
+.c { color: var(--text-3); font-style: italic; } /* comment */
+.p { color: var(--orange); } /* property */
+.n { color: var(--text); }   /* name */
+.num { color: var(--yellow); } /* number */
+
+/* TOKEN TABLE */
+.token-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.token-table th { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-3); padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); background: var(--bg-2); }
+.token-table td { padding: 10px 12px; font-size: 12.5px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.token-table tr:last-child td { border-bottom: none; }
+.token-table tr:hover td { background: var(--bg-2); }
+.token-name { font-family: var(--f-mono); font-size: 12px; color: var(--cyan); }
+.token-value { font-family: var(--f-mono); font-size: 12px; color: var(--green); }
+.token-swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid var(--border); display: inline-block; vertical-align: middle; margin-right: 8px; }
+.token-desc { font-size: 12px; color: var(--text-2); }
+
+/* COMPONENT DEMO AREA */
+.demo-area {
+  background: #121212; border: 1px solid var(--border);
+  border-radius: 10px; padding: 28px; margin: 12px 0;
+}
+/* Preview components */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 0 16px; height: 34px; border-radius: 999px; font-size: 13px; font-weight: 500; cursor: default; font-family: var(--f-sans); border: none; }
+.btn-primary { background: #3D52E5; color: #fff; }
+.btn-secondary { background: rgba(255,255,255,0.07); color: #e8e8e8; border: 1px solid rgba(255,255,255,0.1); }
+.btn-ghost { background: transparent; color: #888; }
+.btn-danger { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); }
+.btn-sm { height: 26px; padding: 0 10px; font-size: 11px; }
+.btn-lg { height: 42px; padding: 0 22px; font-size: 15px; }
+.preview-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 500; }
+.preview-input {
+  height: 36px; background: #1a1a1a; border: 1px solid #2a2a2a;
+  border-radius: 6px; color: #e8e8e8; font-size: 13px; font-family: var(--f-sans);
+  padding: 0 12px; outline: none; width: 100%; max-width: 280px; display: block;
+}
+.preview-card { background: #1a1a1a; border: 1px solid #1e1e1e; border-radius: 10px; padding: 16px; }
+.preview-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.preview-table th { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: #555; padding: 8px 12px; text-align: left; border-bottom: 1px solid #1e1e1e; background: #141414; }
+.preview-table td { padding: 10px 12px; border-bottom: 1px solid #1e1e1e; color: #e8e8e8; }
+.preview-table tr:last-child td { border-bottom: none; }
+
+/* SPEC TABLE */
+.spec-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.spec-table td { padding: 9px 12px; font-size: 13px; border-bottom: 1px solid var(--border); }
+.spec-table td:first-child { font-family: var(--f-mono); font-size: 12px; color: var(--text-2); width: 40%; }
+.spec-table td:last-child { color: var(--text); }
+.spec-table tr:last-child td { border-bottom: none; }
+
+/* DO/DONT */
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+.do-box, .dont-box { padding: 14px 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; }
+.do-box { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); }
+.dont-box { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); }
+.do-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
+.dont-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
+
+/* CALLOUT */
+.callout { padding: 14px 16px; border-radius: 8px; border-left: 3px solid var(--brand); background: var(--brand-dim); margin: 14px 0; font-size: 13px; line-height: 1.65; color: var(--text-2); }
+.callout strong { color: var(--text); }
+
+/* STATUS BADGE IN DEMO */
+.sb-success { background: rgba(34,197,94,0.15); color: #22c55e; }
+.sb-warning { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.sb-danger  { background: rgba(239,68,68,0.15);  color: #ef4444; }
+.sb-brand   { background: rgba(61,82,229,0.18);  color: #3D52E5; }
+.sb-neutral { background: rgba(255,255,255,0.07); color: #888; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 2px; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .main { margin-left: 0; }
+  .content { padding: 24px 18px; }
+}
+
+/* ACTIVE SECTION HIGHLIGHT */
+.nav-link.active { background: var(--brand-dim); color: var(--brand); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+    <span class="logo-text">Cloud<span>School</span></span>
+  </div>
+  <div class="sidebar-version">
+    <span style="font-size:12px;color:var(--text-2);">Design System</span>
+    <span class="version-tag">v2.0</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Getting Started</div>
+    <a class="nav-link active" href="#overview" onclick="setActive(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Overview
+    </a>
+    <a class="nav-link" href="#installation" onclick="setActive(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Installation
+    </a>
+
+    <div class="nav-section">Foundation</div>
+    <a class="nav-link" href="#tokens" onclick="setActive(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Design Tokens
+    </a>
+    <a class="nav-link" href="#colors" onclick="setActive(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      Colors
+    </a>
+    <a class="nav-link" href="#typography" onclick="setActive(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+      Typography
+    </a>
+    <a class="nav-link" href="#spacing" onclick="setActive(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+      Spacing
+    </a>
+
+    <div class="nav-section">Components</div>
+    <a class="nav-link" href="#buttons" onclick="setActive(this)">Buttons</a>
+    <a class="nav-link" href="#badges" onclick="setActive(this)">Badges</a>
+    <a class="nav-link" href="#forms" onclick="setActive(this)">Forms</a>
+    <a class="nav-link" href="#cards" onclick="setActive(this)">Cards</a>
+    <a class="nav-link" href="#tables" onclick="setActive(this)">Tables</a>
+    <a class="nav-link" href="#modals" onclick="setActive(this)">Modals</a>
+
+    <div class="nav-section">Patterns</div>
+    <a class="nav-link" href="#layout" onclick="setActive(this)">App Shell</a>
+    <a class="nav-link" href="#theming" onclick="setActive(this)">Theming</a>
+    <a class="nav-link" href="#motion" onclick="setActive(this)">Motion</a>
+    <a class="nav-link" href="#a11y" onclick="setActive(this)">Accessibility</a>
+  </nav>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title" id="topbarTitle">Overview</span>
+    <div class="topbar-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search tokens, components…" oninput="filterContent(this.value)">
+    </div>
+    <div class="theme-toggle" onclick="toggleDHTheme()" title="Toggle theme">
+      <svg id="dhThemeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- OVERVIEW -->
+    <section class="section-anchor" id="overview">
+      <div class="section-label">Getting Started</div>
+      <h1 class="section-title">CloudSchool Design System</h1>
+      <p class="section-desc">A production-ready design system for school/college/university ERP software. Built on a three-tier token architecture — primitives, semantic tokens, and component aliases. Everything references a token. Nothing is hardcoded.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px;">
+        <div style="padding:16px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;">
+          <div style="font-size:22px;font-weight:700;color:var(--brand);letter-spacing:-1px;margin-bottom:4px;">200+</div>
+          <div style="font-size:12px;color:var(--text-2);">Design tokens across primitives, semantic colors, spacing, type, radius, elevation</div>
+        </div>
+        <div style="padding:16px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;">
+          <div style="font-size:22px;font-weight:700;color:var(--brand);letter-spacing:-1px;margin-bottom:4px;">50+</div>
+          <div style="font-size:12px;color:var(--text-2);">Components — Buttons, Forms, Cards, Tables, Badges, Modals, Tabs, Charts</div>
+        </div>
+        <div style="padding:16px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;">
+          <div style="font-size:22px;font-weight:700;color:var(--brand);letter-spacing:-1px;margin-bottom:4px;">2</div>
+          <div style="font-size:12px;color:var(--text-2);">Themes (dark + light) via single data-theme attribute on &lt;html&gt;</div>
+        </div>
+      </div>
+
+      <div class="callout"><strong>Important:</strong> All component styles use CSS custom properties. Never use hardcoded color hex values in your components — always reference a semantic token like <code style="font-family:var(--f-mono);font-size:12px;">var(--color-brand)</code> or <code style="font-family:var(--f-mono);font-size:12px;">var(--text-primary)</code>.</div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- INSTALLATION -->
+    <section class="section-anchor" id="installation">
+      <div class="section-label">Getting Started</div>
+      <h2 class="section-title">Installation</h2>
+      <p class="section-desc">The design system is delivered as standalone HTML/CSS. Copy the token block into your project's root CSS file, then import component styles as needed.</p>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTML</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c">&lt;!-- 1. Load fonts --&gt;</span>
+<span class="k">&lt;link</span> <span class="p">href</span>=<span class="s">"https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap"</span> <span class="p">rel</span>=<span class="s">"stylesheet"</span><span class="k">&gt;</span>
+
+<span class="c">&lt;!-- 2. Add data-theme to html element --&gt;</span>
+<span class="k">&lt;html</span> <span class="p">lang</span>=<span class="s">"en"</span> <span class="p">data-theme</span>=<span class="s">"dark"</span><span class="k">&gt;</span>
+
+<span class="c">&lt;!-- 3. Import foundation CSS --&gt;</span>
+<span class="k">&lt;link</span> <span class="p">rel</span>=<span class="s">"stylesheet"</span> <span class="p">href</span>=<span class="s">"cloudschool-foundation.css"</span><span class="k">&gt;</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">JS — Theme Toggle</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="k">function</span> <span class="n">toggleTheme</span>() {
+  <span class="k">const</span> <span class="n">html</span> = <span class="n">document</span>.<span class="n">documentElement</span>;
+  <span class="n">html</span>.<span class="n">setAttribute</span>(<span class="s">'data-theme'</span>,
+    <span class="n">html</span>.<span class="n">getAttribute</span>(<span class="s">'data-theme'</span>) === <span class="s">'dark'</span> ? <span class="s">'light'</span> : <span class="s">'dark'</span>
+  );
+}</pre>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- TOKENS -->
+    <section class="section-anchor" id="tokens">
+      <div class="section-label">Foundation</div>
+      <h2 class="section-title">Design Tokens</h2>
+      <p class="section-desc">Tokens are organized in three tiers. Never reference primitive tokens in components — always go through semantic tokens.</p>
+
+      <div class="callout"><strong>Tier 1 → Primitive:</strong> Raw values. <code style="font-family:var(--f-mono);font-size:12px;">--primitive-neutral-900: #0f0f0f</code><br><strong>Tier 2 → Semantic:</strong> Contextual meaning. <code style="font-family:var(--f-mono);font-size:12px;">--color-bg-deepest: var(--primitive-neutral-900)</code><br><strong>Tier 3 → Component alias:</strong> Short-form. <code style="font-family:var(--f-mono);font-size:12px;">--brand: var(--color-brand)</code></div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">CSS — Token Block (partial)</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="k">:root</span> {
+  <span class="c">/* ── Brand ─────────────────────────────── */</span>
+  <span class="p">--color-brand</span>:        <span class="num">#3D52E5</span>;
+  <span class="p">--color-brand-hover</span>:  <span class="num">#3246d3</span>;
+  <span class="p">--color-brand-alpha-20</span>: <span class="v">rgba(61,82,229,0.18)</span>;
+  <span class="p">--color-brand-alpha-10</span>: <span class="v">rgba(61,82,229,0.10)</span>;
+
+  <span class="c">/* ── Backgrounds ────────────────────────── */</span>
+  <span class="p">--color-bg-deepest</span>:   <span class="num">#0f0f0f</span>;
+  <span class="p">--color-bg-base</span>:      <span class="num">#121212</span>;
+  <span class="p">--color-bg-canvas</span>:    <span class="num">#171717</span>;
+  <span class="p">--color-bg-surface</span>:   <span class="num">#1a1a1a</span>;
+  <span class="p">--color-bg-elevated</span>:  <span class="num">#1f1f1f</span>;
+  <span class="p">--color-bg-overlay</span>:   <span class="num">#242424</span>;
+
+  <span class="c">/* ── Borders ────────────────────────────── */</span>
+  <span class="p">--border-subtle</span>:      <span class="num">#1e1e1e</span>;
+  <span class="p">--border-standard</span>:    <span class="num">#2a2a2a</span>;
+  <span class="p">--border-prominent</span>:   <span class="num">#363636</span>;
+  <span class="p">--border-focus</span>:       <span class="v">var(--color-brand)</span>;
+
+  <span class="c">/* ── Text ───────────────────────────────── */</span>
+  <span class="p">--text-primary</span>:       <span class="num">#f0f0f0</span>;
+  <span class="p">--text-secondary</span>:     <span class="num">#a0a0a0</span>;
+  <span class="p">--text-tertiary</span>:      <span class="num">#6b6b6b</span>;
+  <span class="p">--text-disabled</span>:      <span class="num">#4a4a4a</span>;
+  <span class="p">--text-brand</span>:         <span class="v">var(--color-brand)</span>;
+
+  <span class="c">/* ── Status ─────────────────────────────── */</span>
+  <span class="p">--color-success</span>:      <span class="num">#22c55e</span>;
+  <span class="p">--color-warning</span>:      <span class="num">#f59e0b</span>;
+  <span class="p">--color-danger</span>:       <span class="num">#ef4444</span>;
+  <span class="p">--color-info</span>:         <span class="num">#3b82f6</span>;
+
+  <span class="c">/* ── Motion ─────────────────────────────── */</span>
+  <span class="p">--ease-out</span>:    <span class="v">cubic-bezier(0.16, 1, 0.3, 1)</span>;
+  <span class="p">--ease-in-out</span>: <span class="v">cubic-bezier(0.4, 0, 0.2, 1)</span>;
+  <span class="p">--dur-fast</span>:    <span class="num">120ms</span>;
+  <span class="p">--dur-std</span>:     <span class="num">220ms</span>;
+  <span class="p">--dur-slow</span>:    <span class="num">380ms</span>;
+}</pre>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- COLORS -->
+    <section class="section-anchor" id="colors">
+      <div class="section-label">Foundation</div>
+      <h2 class="section-title">Colors</h2>
+      <p class="section-desc">The system uses one brand color as a functional accent. Status colors carry semantic meaning and must not be decorative.</p>
+
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Swatch</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td class="token-name">--color-brand</td><td class="token-value">#3D52E5</td><td><span class="token-swatch" style="background:#3D52E5;"></span></td><td class="token-desc">Interactive elements, active states, CTA buttons</td></tr>
+          <tr><td class="token-name">--color-bg-base</td><td class="token-value">#121212</td><td><span class="token-swatch" style="background:#121212;"></span></td><td class="token-desc">Page background, topbar background</td></tr>
+          <tr><td class="token-name">--color-bg-surface</td><td class="token-value">#1a1a1a</td><td><span class="token-swatch" style="background:#1a1a1a;"></span></td><td class="token-desc">Cards, panels, modal bodies</td></tr>
+          <tr><td class="token-name">--text-primary</td><td class="token-value">#f0f0f0</td><td><span class="token-swatch" style="background:#f0f0f0;"></span></td><td class="token-desc">Headings, primary body copy, table data</td></tr>
+          <tr><td class="token-name">--text-secondary</td><td class="token-value">#a0a0a0</td><td><span class="token-swatch" style="background:#a0a0a0;"></span></td><td class="token-desc">Labels, supporting text, placeholder</td></tr>
+          <tr><td class="token-name">--color-success</td><td class="token-value">#22c55e</td><td><span class="token-swatch" style="background:#22c55e;"></span></td><td class="token-desc">Active/passed states, positive deltas</td></tr>
+          <tr><td class="token-name">--color-warning</td><td class="token-value">#f59e0b</td><td><span class="token-swatch" style="background:#f59e0b;"></span></td><td class="token-desc">Pending states, at-risk indicators, low attendance</td></tr>
+          <tr><td class="token-name">--color-danger</td><td class="token-value">#ef4444</td><td><span class="token-swatch" style="background:#ef4444;"></span></td><td class="token-desc">Errors, failed states, overdue, suspended</td></tr>
+          <tr><td class="token-name">--border-standard</td><td class="token-value">#2a2a2a</td><td><span class="token-swatch" style="background:#2a2a2a;"></span></td><td class="token-desc">Card borders, table rows, form inputs (default)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="do-dont">
+        <div class="do-box"><div class="do-label">✓ Do</div>Use <code style="font-family:var(--f-mono);font-size:12px;">var(--color-success)</code> for passing grades, active statuses, positive fee receipt</div>
+        <div class="dont-box"><div class="dont-label">✗ Don't</div>Use <code style="font-family:var(--f-mono);font-size:12px;">#22c55e</code> directly or use green for decorative purposes</div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- TYPOGRAPHY -->
+    <section class="section-anchor" id="typography">
+      <div class="section-label">Foundation</div>
+      <h2 class="section-title">Typography</h2>
+      <p class="section-desc">DM Sans for UI. DM Mono for IDs, code, and data values. Weight is semantic — not a styling preference.</p>
+
+      <table class="token-table">
+        <thead><tr><th>Class</th><th>Size</th><th>Weight</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td class="token-name">.t-hero</td><td class="token-value">48px</td><td>700</td><td class="token-desc">Marketing hero titles only</td></tr>
+          <tr><td class="token-name">.t-h1</td><td class="token-value">32px</td><td>600</td><td class="token-desc">Page headings</td></tr>
+          <tr><td class="token-name">.t-h2</td><td class="token-value">24px</td><td>600</td><td class="token-desc">Section headings, modal titles</td></tr>
+          <tr><td class="token-name">.t-h3</td><td class="token-value">18px</td><td>600</td><td class="token-desc">Card titles, sub-section headings</td></tr>
+          <tr><td class="token-name">.t-h4</td><td class="token-value">16px</td><td>500</td><td class="token-desc">Group labels, panel headings</td></tr>
+          <tr><td class="token-name">.t-body</td><td class="token-value">14px</td><td>400</td><td class="token-desc">Default body copy</td></tr>
+          <tr><td class="token-name">.t-small</td><td class="token-value">12px</td><td>400</td><td class="token-desc">Supporting text, hints, descriptions</td></tr>
+          <tr><td class="token-name">.t-caption</td><td class="token-value">11px</td><td>400</td><td class="token-desc">Timestamps, meta, chart labels</td></tr>
+          <tr><td class="token-name">.t-label</td><td class="token-value">11px</td><td>600</td><td class="token-desc">Section labels (uppercase + 1.6px tracking)</td></tr>
+          <tr><td class="token-name">.t-mono</td><td class="token-value">12px</td><td>500</td><td class="token-desc">Student IDs, receipt numbers, code values</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout"><strong>Weight rule:</strong> 400 default body · 500 interactive elements · 600 uppercase labels · 700 table data only (never for headings)</div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SPACING -->
+    <section class="section-anchor" id="spacing">
+      <div class="section-label">Foundation</div>
+      <h2 class="section-title">Spacing</h2>
+      <p class="section-desc">4px base grid. All spacing values are CSS custom properties — never use raw px values in component CSS.</p>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">CSS</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="p">--sp-2</span>: <span class="num">2px</span>;   <span class="p">--sp-4</span>:  <span class="num">4px</span>;   <span class="p">--sp-6</span>:  <span class="num">6px</span>;   <span class="p">--sp-8</span>:  <span class="num">8px</span>;
+<span class="p">--sp-10</span>: <span class="num">10px</span>;  <span class="p">--sp-12</span>: <span class="num">12px</span>;  <span class="p">--sp-16</span>: <span class="num">16px</span>;  <span class="p">--sp-20</span>: <span class="num">20px</span>;
+<span class="p">--sp-24</span>: <span class="num">24px</span>;  <span class="p">--sp-28</span>: <span class="num">28px</span>;  <span class="p">--sp-32</span>: <span class="num">32px</span>;  <span class="p">--sp-40</span>: <span class="num">40px</span>;
+<span class="p">--sp-48</span>: <span class="num">48px</span>;  <span class="p">--sp-56</span>: <span class="num">56px</span>;  <span class="p">--sp-64</span>: <span class="num">64px</span>;</pre>
+      </div>
+
+      <table class="token-table" style="margin-top:14px;">
+        <thead><tr><th>Token</th><th>Value</th><th>Common use</th></tr></thead>
+        <tbody>
+          <tr><td class="token-name">--sp-4</td><td class="token-value">4px</td><td class="token-desc">Icon-text gap, badge internal padding</td></tr>
+          <tr><td class="token-name">--sp-8</td><td class="token-value">8px</td><td class="token-desc">Button internal gaps, tight list spacing</td></tr>
+          <tr><td class="token-name">--sp-12</td><td class="token-value">12px</td><td class="token-desc">Form group gap, table cell padding</td></tr>
+          <tr><td class="token-name">--sp-16</td><td class="token-value">16px</td><td class="token-desc">Card padding, modal section spacing</td></tr>
+          <tr><td class="token-name">--sp-24</td><td class="token-value">24px</td><td class="token-desc">Page body padding, section gaps</td></tr>
+          <tr><td class="token-name">--sp-32</td><td class="token-value">32px</td><td class="token-desc">Major section spacing</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- BUTTONS -->
+    <section class="section-anchor" id="buttons">
+      <div class="section-label">Components</div>
+      <h2 class="section-title">Buttons</h2>
+      <p class="section-desc">All buttons use pill radius (9999px). This is the only component that uses pill radius — it creates an immediate visual grammar for interactivity.</p>
+
+      <div class="demo-area">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-ghost">Ghost</button>
+          <button class="btn btn-danger">Danger</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary btn-lg">Large</button>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTML</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c">&lt;!-- Variants --&gt;</span>
+<span class="k">&lt;button</span> <span class="p">class</span>=<span class="s">"btn btn-primary"</span><span class="k">&gt;</span>Primary<span class="k">&lt;/button&gt;</span>
+<span class="k">&lt;button</span> <span class="p">class</span>=<span class="s">"btn btn-secondary"</span><span class="k">&gt;</span>Secondary<span class="k">&lt;/button&gt;</span>
+<span class="k">&lt;button</span> <span class="p">class</span>=<span class="s">"btn btn-ghost"</span><span class="k">&gt;</span>Ghost<span class="k">&lt;/button&gt;</span>
+<span class="k">&lt;button</span> <span class="p">class</span>=<span class="s">"btn btn-danger"</span><span class="k">&gt;</span>Danger<span class="k">&lt;/button&gt;</span>
+
+<span class="c">&lt;!-- Sizes --&gt;</span>
+<span class="k">&lt;button</span> <span class="p">class</span>=<span class="s">"btn btn-primary btn-sm"</span><span class="k">&gt;</span>Small<span class="k">&lt;/button&gt;</span>
+<span class="k">&lt;button</span> <span class="p">class</span>=<span class="s">"btn btn-primary btn-lg"</span><span class="k">&gt;</span>Large<span class="k">&lt;/button&gt;</span>
+
+<span class="c">&lt;!-- Disabled --&gt;</span>
+<span class="k">&lt;button</span> <span class="p">class</span>=<span class="s">"btn btn-primary"</span> <span class="p">disabled</span><span class="k">&gt;</span>Disabled<span class="k">&lt;/button&gt;</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">CSS — .btn base</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="n">.btn</span> {
+  <span class="p">display</span>: <span class="v">inline-flex</span>;
+  <span class="p">align-items</span>: <span class="v">center</span>;
+  <span class="p">justify-content</span>: <span class="v">center</span>;
+  <span class="p">gap</span>: <span class="v">var(--sp-6)</span>;
+  <span class="p">height</span>: <span class="num">36px</span>;
+  <span class="p">padding</span>: <span class="num">0</span> <span class="v">var(--sp-16)</span>;
+  <span class="p">border-radius</span>: <span class="v">var(--radius-pill)</span>; <span class="c">/* 9999px */</span>
+  <span class="p">font-weight</span>: <span class="num">500</span>;
+  <span class="p">font-size</span>: <span class="num">13.5px</span>;
+  <span class="p">border</span>: <span class="v">none</span>;
+  <span class="p">cursor</span>: <span class="v">pointer</span>;
+  <span class="p">transition</span>: <span class="v">background var(--dur-fast), transform var(--dur-fast)</span>;
+}
+<span class="n">.btn:active</span> { <span class="p">transform</span>: <span class="v">scale(0.97)</span>; }
+<span class="n">.btn:disabled</span> { <span class="p">opacity</span>: <span class="num">0.4</span>; <span class="p">cursor</span>: <span class="v">not-allowed</span>; }
+
+<span class="n">.btn-primary</span> { <span class="p">background</span>: <span class="v">var(--color-brand)</span>; <span class="p">color</span>: <span class="num">#fff</span>; }
+<span class="n">.btn-primary:hover</span> { <span class="p">background</span>: <span class="v">var(--color-brand-hover)</span>; }</pre>
+      </div>
+
+      <table class="spec-table">
+        <tr><td>Height — default</td><td>36px</td></tr>
+        <tr><td>Height — sm</td><td>28px</td></tr>
+        <tr><td>Height — lg</td><td>44px</td></tr>
+        <tr><td>Border radius</td><td>9999px (pill only)</td></tr>
+        <tr><td>Font weight</td><td>500</td></tr>
+        <tr><td>Active transform</td><td>scale(0.97)</td></tr>
+        <tr><td>Disabled opacity</td><td>0.4</td></tr>
+      </table>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- BADGES -->
+    <section class="section-anchor" id="badges">
+      <div class="section-label">Components</div>
+      <h2 class="section-title">Badges</h2>
+      <p class="section-desc">Status indicators. Always semantic — never decorative. The dot variant uses a CSS ::before pseudo-element for the status dot.</p>
+
+      <div class="demo-area">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+          <span class="preview-badge sb-success">Active</span>
+          <span class="preview-badge sb-warning">Pending</span>
+          <span class="preview-badge sb-danger">Suspended</span>
+          <span class="preview-badge sb-brand">Enrolled</span>
+          <span class="preview-badge sb-neutral">Inactive</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span class="preview-badge sb-success" style="display:inline-flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#22c55e;"></span>Active</span>
+          <span class="preview-badge sb-warning" style="display:inline-flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#f59e0b;"></span>Pending</span>
+          <span class="preview-badge sb-danger" style="display:inline-flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#ef4444;"></span>Overdue</span>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTML</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="k">&lt;span</span> <span class="p">class</span>=<span class="s">"badge badge-success"</span><span class="k">&gt;</span>Active<span class="k">&lt;/span&gt;</span>
+<span class="k">&lt;span</span> <span class="p">class</span>=<span class="s">"badge badge-warning"</span><span class="k">&gt;</span>Pending<span class="k">&lt;/span&gt;</span>
+<span class="k">&lt;span</span> <span class="p">class</span>=<span class="s">"badge badge-danger"</span><span class="k">&gt;</span>Suspended<span class="k">&lt;/span&gt;</span>
+<span class="k">&lt;span</span> <span class="p">class</span>=<span class="s">"badge badge-brand"</span><span class="k">&gt;</span>Enrolled<span class="k">&lt;/span&gt;</span>
+<span class="k">&lt;span</span> <span class="p">class</span>=<span class="s">"badge badge-neutral"</span><span class="k">&gt;</span>Inactive<span class="k">&lt;/span&gt;</span>
+
+<span class="c">&lt;!-- With dot --&gt;</span>
+<span class="k">&lt;span</span> <span class="p">class</span>=<span class="s">"badge badge-success badge-dot"</span><span class="k">&gt;</span>Active<span class="k">&lt;/span&gt;</span></pre>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- FORMS -->
+    <section class="section-anchor" id="forms">
+      <div class="section-label">Components</div>
+      <h2 class="section-title">Forms</h2>
+      <p class="section-desc">All form elements share the same height (40px), border, and focus ring. Validation states use class modifiers on the parent .form-group.</p>
+
+      <div class="demo-area">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:520px;">
+          <div>
+            <div style="font-size:11px;font-weight:500;color:#888;margin-bottom:6px;">Default</div>
+            <input class="preview-input" placeholder="Enter student name…">
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:500;color:#888;margin-bottom:6px;">With value</div>
+            <input class="preview-input" value="Priya Sharma">
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTML — Form group with validation</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"form-group"</span> <span class="p">id</span>=<span class="s">"fg-email"</span><span class="k">&gt;</span>
+  <span class="k">&lt;label</span> <span class="p">class</span>=<span class="s">"form-label"</span><span class="k">&gt;</span>
+    Email <span class="k">&lt;span</span> <span class="p">class</span>=<span class="s">"required"</span><span class="k">&gt;</span>*<span class="k">&lt;/span&gt;</span>
+  <span class="k">&lt;/label&gt;</span>
+  <span class="k">&lt;input</span>
+    <span class="p">class</span>=<span class="s">"form-input"</span>
+    <span class="p">type</span>=<span class="s">"email"</span>
+    <span class="p">placeholder</span>=<span class="s">"student@institution.edu"</span>
+  <span class="k">&gt;</span>
+  <span class="k">&lt;span</span> <span class="p">class</span>=<span class="s">"form-error"</span><span class="k">&gt;</span>
+    Please enter a valid email.
+  <span class="k">&lt;/span&gt;</span>
+<span class="k">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Trigger error state via JS --&gt;</span>
+<span class="n">document</span>.<span class="n">getElementById</span>(<span class="s">'fg-email'</span>)
+  .<span class="n">classList</span>.<span class="n">add</span>(<span class="s">'has-error'</span>);</pre>
+      </div>
+
+      <table class="spec-table">
+        <tr><td>Input height</td><td>40px</td></tr>
+        <tr><td>Border radius</td><td>var(--radius-md) — 6px</td></tr>
+        <tr><td>Focus ring</td><td>box-shadow: 0 0 0 3px var(--color-brand-alpha-20)</td></tr>
+        <tr><td>Error state</td><td>Add .has-error to .form-group — shows .form-error, colors label red</td></tr>
+        <tr><td>Disabled</td><td>opacity: 0.5 + cursor: not-allowed on input</td></tr>
+      </table>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CARDS -->
+    <section class="section-anchor" id="cards">
+      <div class="section-label">Components</div>
+      <h2 class="section-title">Cards</h2>
+      <p class="section-desc">Cards use border-based depth, not shadows. Shadows are reserved for modals and floating elements. Never mix borders and shadows on the same card.</p>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTML — Stat card</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"stat-card"</span><span class="k">&gt;</span>
+  <span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"stat-label"</span><span class="k">&gt;</span>Total Students<span class="k">&lt;/div&gt;</span>
+  <span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"stat-value"</span><span class="k">&gt;</span>4,821<span class="k">&lt;/div&gt;</span>
+  <span class="k">&lt;div&gt;</span>
+    <span class="k">&lt;span</span> <span class="p">class</span>=<span class="s">"stat-delta up"</span><span class="k">&gt;</span>↑ +8.2%<span class="k">&lt;/span&gt;</span>
+  <span class="k">&lt;/div&gt;</span>
+  <span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"stat-footer"</span><span class="k">&gt;</span>vs last semester<span class="k">&lt;/div&gt;</span>
+<span class="k">&lt;/div&gt;</span></pre>
+      </div>
+
+      <div class="do-dont">
+        <div class="do-box"><div class="do-label">✓ Do</div>Use <code style="font-family:var(--f-mono);font-size:12px;">border: 1px solid var(--border-subtle)</code> on cards. Stack cards on --bg-surface inside a --bg-canvas parent for elevation hierarchy.</div>
+        <div class="dont-box"><div class="dont-label">✗ Don't</div>Add box-shadow to cards. Don't nest cards inside cards more than one level deep. Don't use --border-prominent on cards — it's too strong.</div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- TABLES -->
+    <section class="section-anchor" id="tables">
+      <div class="section-label">Components</div>
+      <h2 class="section-title">Tables</h2>
+      <p class="section-desc">All data tables use the .table-wrap container for horizontal scroll on mobile. The thead uses a distinct background. Row hover uses --color-bg-canvas.</p>
+
+      <div class="demo-area" style="padding:0;overflow:hidden;border-radius:10px;">
+        <table class="preview-table">
+          <thead><tr><th>Student</th><th>ID</th><th>GPA</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Priya Sharma</td><td style="font-family:var(--f-mono);font-size:11px;color:#555;">CS-2025-001</td><td style="font-weight:700;color:#22c55e;">3.92</td><td><span class="preview-badge sb-success" style="display:inline-flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#22c55e;"></span>Active</span></td></tr>
+            <tr><td>Rahul Mehta</td><td style="font-family:var(--f-mono);font-size:11px;color:#555;">CS-2025-002</td><td style="font-weight:700;color:#3D52E5;">3.61</td><td><span class="preview-badge sb-success" style="display:inline-flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#22c55e;"></span>Active</span></td></tr>
+            <tr><td>Ishaan Roy</td><td style="font-family:var(--f-mono);font-size:11px;color:#555;">CS-2025-009</td><td style="font-weight:700;color:#f59e0b;">3.10</td><td><span class="preview-badge sb-warning" style="display:inline-flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#f59e0b;"></span>Inactive</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTML</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"table-wrap"</span><span class="k">&gt;</span>
+  <span class="k">&lt;table&gt;</span>
+    <span class="k">&lt;thead&gt;</span>
+      <span class="k">&lt;tr&gt;</span>
+        <span class="k">&lt;th</span> <span class="p">class</span>=<span class="s">"sortable"</span> <span class="p">onclick</span>=<span class="s">"sortTable('name')"</span><span class="k">&gt;</span>
+          Student
+        <span class="k">&lt;/th&gt;</span>
+        <span class="k">&lt;th&gt;</span>Status<span class="k">&lt;/th&gt;</span>
+      <span class="k">&lt;/tr&gt;</span>
+    <span class="k">&lt;/thead&gt;</span>
+    <span class="k">&lt;tbody&gt;</span>
+      <span class="k">&lt;tr</span> <span class="p">onclick</span>=<span class="s">"openProfile(id)"</span><span class="k">&gt;</span>
+        <span class="k">&lt;td</span> <span class="p">class</span>=<span class="s">"td-id"</span><span class="k">&gt;</span>CS-2025-001<span class="k">&lt;/td&gt;</span>
+        <span class="k">&lt;td&gt;&lt;span</span> <span class="p">class</span>=<span class="s">"badge badge-success badge-dot"</span><span class="k">&gt;</span>Active<span class="k">&lt;/span&gt;&lt;/td&gt;</span>
+      <span class="k">&lt;/tr&gt;</span>
+    <span class="k">&lt;/tbody&gt;</span>
+  <span class="k">&lt;/table&gt;</span>
+<span class="k">&lt;/div&gt;</span></pre>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MODALS -->
+    <section class="section-anchor" id="modals">
+      <div class="section-label">Components</div>
+      <h2 class="section-title">Modals</h2>
+      <p class="section-desc">Modals use a blurred backdrop, scale-in animation, and a max-width of 480px by default. Always include a close button and ESC key handler.</p>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTML — Modal structure</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"modal-backdrop"</span> <span class="p">id</span>=<span class="s">"myModal"</span><span class="k">&gt;</span>
+  <span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"modal"</span><span class="k">&gt;</span>
+
+    <span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"modal-header"</span><span class="k">&gt;</span>
+      <span class="k">&lt;span</span> <span class="p">class</span>=<span class="s">"modal-title"</span><span class="k">&gt;</span>Title<span class="k">&lt;/span&gt;</span>
+      <span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"modal-close"</span>
+           <span class="p">onclick</span>=<span class="s">"closeModal('myModal')"</span><span class="k">&gt;</span>✕<span class="k">&lt;/div&gt;</span>
+    <span class="k">&lt;/div&gt;</span>
+
+    <span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"modal-body"</span><span class="k">&gt;</span>
+      <span class="c">&lt;!-- content --&gt;</span>
+    <span class="k">&lt;/div&gt;</span>
+
+    <span class="k">&lt;div</span> <span class="p">class</span>=<span class="s">"modal-footer"</span><span class="k">&gt;</span>
+      <span class="k">&lt;button</span> <span class="p">class</span>=<span class="s">"btn btn-secondary"</span>
+              <span class="p">onclick</span>=<span class="s">"closeModal('myModal')"</span><span class="k">&gt;</span>Cancel<span class="k">&lt;/button&gt;</span>
+      <span class="k">&lt;button</span> <span class="p">class</span>=<span class="s">"btn btn-primary"</span><span class="k">&gt;</span>Confirm<span class="k">&lt;/button&gt;</span>
+    <span class="k">&lt;/div&gt;</span>
+
+  <span class="k">&lt;/div&gt;</span>
+<span class="k">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- JS --&gt;</span>
+<span class="k">function</span> <span class="n">openModal</span>(<span class="n">id</span>)  { <span class="n">document</span>.<span class="n">getElementById</span>(<span class="n">id</span>).<span class="n">classList</span>.<span class="n">add</span>(<span class="s">'open'</span>); }
+<span class="k">function</span> <span class="n">closeModal</span>(<span class="n">id</span>) { <span class="n">document</span>.<span class="n">getElementById</span>(<span class="n">id</span>).<span class="n">classList</span>.<span class="n">remove</span>(<span class="s">'open'</span>); }
+
+<span class="c">// ESC to close</span>
+<span class="n">document</span>.<span class="n">addEventListener</span>(<span class="s">'keydown'</span>, <span class="n">e</span> =&gt; {
+  <span class="k">if</span> (<span class="n">e</span>.<span class="n">key</span> === <span class="s">'Escape'</span>)
+    <span class="n">document</span>.<span class="n">querySelectorAll</span>(<span class="s">'.modal-backdrop.open'</span>)
+      .<span class="n">forEach</span>(<span class="n">m</span> =&gt; <span class="n">m</span>.<span class="n">classList</span>.<span class="n">remove</span>(<span class="s">'open'</span>));
+});</pre>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- APP SHELL LAYOUT -->
+    <section class="section-anchor" id="layout">
+      <div class="section-label">Patterns</div>
+      <h2 class="section-title">App Shell</h2>
+      <p class="section-desc">The admin shell uses a fixed 240px sidebar, 56px topbar, and main-content with left margin. The student shell uses 220px. Never use absolute positioning for content — always margin-left on main-content.</p>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">CSS — Layout tokens</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="p">--sidebar-w</span>: <span class="num">240px</span>;  <span class="c">/* admin */</span>
+<span class="p">--topbar-h</span>:  <span class="num">56px</span>;
+
+<span class="n">.sidebar</span> {
+  <span class="p">width</span>: <span class="v">var(--sidebar-w)</span>;
+  <span class="p">position</span>: <span class="v">fixed</span>;
+  <span class="p">top</span>: <span class="num">0</span>; <span class="p">left</span>: <span class="num">0</span>; <span class="p">bottom</span>: <span class="num">0</span>;
+  <span class="p">background</span>: <span class="v">var(--primitive-neutral-900)</span>;
+  <span class="p">border-right</span>: <span class="num">1px</span> <span class="v">solid var(--border-subtle)</span>;
+  <span class="p">z-index</span>: <span class="num">100</span>;
+}
+<span class="n">.main-content</span> {
+  <span class="p">margin-left</span>: <span class="v">var(--sidebar-w)</span>;
+  <span class="p">flex</span>: <span class="num">1</span>;
+}
+<span class="c">/* Mobile: sidebar becomes overlay */</span>
+<span class="k">@media</span> (<span class="p">max-width</span>: <span class="num">768px</span>) {
+  <span class="n">.sidebar</span> { <span class="p">transform</span>: <span class="v">translateX(-100%)</span>; }
+  <span class="n">.sidebar.open</span> { <span class="p">transform</span>: <span class="v">translateX(0)</span>; }
+  <span class="n">.main-content</span> { <span class="p">margin-left</span>: <span class="num">0</span>; }
+}</pre>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- THEMING -->
+    <section class="section-anchor" id="theming">
+      <div class="section-label">Patterns</div>
+      <h2 class="section-title">Theming</h2>
+      <p class="section-desc">Light/dark mode is implemented via data-theme on the html element. Semantic tokens remap — primitives never change. Component code never needs to change between themes.</p>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">CSS — Light mode override</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="k">[data-theme="light"]</span> {
+  <span class="p">--color-bg-base</span>:    <span class="num">#f4f4f5</span>;
+  <span class="p">--color-bg-surface</span>: <span class="num">#ffffff</span>;
+  <span class="p">--text-primary</span>:     <span class="num">#09090b</span>;
+  <span class="p">--text-secondary</span>:   <span class="num">#52525b</span>;
+  <span class="p">--border-subtle</span>:    <span class="num">#e4e4e7</span>;
+  <span class="p">--border-standard</span>:  <span class="num">#d4d4d8</span>;
+  <span class="c">/* Brand color never changes */</span>
+  <span class="c">/* --color-brand stays #3D52E5 */</span>
+}</pre>
+      </div>
+
+      <div class="callout"><strong>Rule:</strong> Never use <code style="font-family:var(--f-mono);font-size:12px;">--primitive-neutral-*</code> tokens directly in components. If a surface needs to stay dark in light mode (e.g. sidebar), use the hardcoded primitive — not a semantic token that flips.</div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- MOTION -->
+    <section class="section-anchor" id="motion">
+      <div class="section-label">Patterns</div>
+      <h2 class="section-title">Motion</h2>
+      <p class="section-desc">Motion is purposeful, not decorative. Use the defined duration scale and easing curves — never custom values.</p>
+
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td class="token-name">--dur-fast</td><td class="token-value">120ms</td><td class="token-desc">Hover states, color transitions, badge changes</td></tr>
+          <tr><td class="token-name">--dur-std</td><td class="token-value">220ms</td><td class="token-desc">Sidebar active, modal backdrop, toast in</td></tr>
+          <tr><td class="token-name">--dur-slow</td><td class="token-value">380ms</td><td class="token-desc">Page transitions, modal scale-in, panel slide</td></tr>
+          <tr><td class="token-name">--ease-out</td><td class="token-value">cubic-bezier(0.16,1,0.3,1)</td><td class="token-desc">Elements entering the screen (decelerating)</td></tr>
+          <tr><td class="token-name">--ease-in-out</td><td class="token-value">cubic-bezier(0.4,0,0.2,1)</td><td class="token-desc">Toggles, theme switches, state changes</td></tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">CSS — Page transition</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="k">@keyframes</span> <span class="n">pageFadeIn</span> {
+  <span class="k">from</span> { <span class="p">opacity</span>: <span class="num">0</span>; <span class="p">transform</span>: <span class="v">translateY(8px)</span>; }
+  <span class="k">to</span>   { <span class="p">opacity</span>: <span class="num">1</span>; <span class="p">transform</span>: <span class="v">translateY(0)</span>; }
+}
+<span class="n">.view-enter</span> {
+  <span class="p">animation</span>: <span class="v">pageFadeIn var(--dur-slow) var(--ease-out) both</span>;
+}</pre>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ACCESSIBILITY -->
+    <section class="section-anchor" id="a11y">
+      <div class="section-label">Patterns</div>
+      <h2 class="section-title">Accessibility</h2>
+      <p class="section-desc">All components must meet WCAG 2.1 AA. Key requirements for CloudSchool components:</p>
+
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;">
+          <span style="color:var(--green);font-weight:700;flex-shrink:0;">4.5:1</span>
+          <div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">Text contrast ratio</div><div style="font-size:12px;color:var(--text-2);">--text-primary (#f0f0f0) on --bg-base (#121212) = 14.6:1 ✓</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;">
+          <span style="color:var(--green);font-weight:700;flex-shrink:0;">44px</span>
+          <div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">Minimum touch target</div><div style="font-size:12px;color:var(--text-2);">All interactive elements must be ≥44px in at least one dimension on mobile</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;">
+          <span style="color:var(--green);font-weight:700;flex-shrink:0;">3px</span>
+          <div><div style="font-size:13px;font-weight:500;margin-bottom:2px;">Focus ring width</div><div style="font-size:12px;color:var(--text-2);"><code style="font-family:var(--f-mono);font-size:11px;">box-shadow: 0 0 0 3px var(--color-brand-alpha-20)</code> — visible on all backgrounds</div></div>
+        </div>
+      </div>
+
+      <div class="callout"><strong>Color alone rule:</strong> Never use color as the only differentiator. All status badges include a text label in addition to color. The dot variant is additive — the label is always present.</div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTML — Focus + ARIA pattern</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="c">&lt;!-- Required for icon-only buttons --&gt;</span>
+<span class="k">&lt;button</span> <span class="p">class</span>=<span class="s">"icon-btn"</span>
+        <span class="p">aria-label</span>=<span class="s">"Open notifications"</span>
+        <span class="p">title</span>=<span class="s">"Notifications"</span><span class="k">&gt;</span>
+  <span class="k">&lt;svg</span> <span class="p">aria-hidden</span>=<span class="s">"true"</span><span class="k">&gt;</span>...<span class="k">&lt;/svg&gt;</span>
+<span class="k">&lt;/button&gt;</span>
+
+<span class="c">&lt;!-- Required for form inputs --&gt;</span>
+<span class="k">&lt;label</span> <span class="p">for</span>=<span class="s">"student-email"</span> <span class="p">class</span>=<span class="s">"form-label"</span><span class="k">&gt;</span>
+  Email
+<span class="k">&lt;/label&gt;</span>
+<span class="k">&lt;input</span> <span class="p">id</span>=<span class="s">"student-email"</span>
+       <span class="p">class</span>=<span class="s">"form-input"</span>
+       <span class="p">aria-describedby</span>=<span class="s">"student-email-error"</span>
+       <span class="p">aria-invalid</span>=<span class="s">"false"</span><span class="k">&gt;</span>
+<span class="k">&lt;span</span> <span class="p">id</span>=<span class="s">"student-email-error"</span>
+      <span class="p">class</span>=<span class="s">"form-error"</span>
+      <span class="p">role</span>=<span class="s">"alert"</span><span class="k">&gt;</span>
+  Please enter a valid email.
+<span class="k">&lt;/span&gt;</span></pre>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <div style="padding:32px;background:var(--bg-2);border:1px solid var(--border);border-radius:12px;text-align:center;margin-bottom:60px;">
+      <div style="font-size:18px;font-weight:600;margin-bottom:8px;">CloudSchool Design System v2.0</div>
+      <div style="font-size:13px;color:var(--text-2);margin-bottom:20px;">200+ tokens · 50+ components · 10 prototype modules · Full dark/light parity</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="showCopied(this)">Copy Token Block</button>
+        <button class="btn btn-secondary" onclick="alert('Open cloudschool-prototype-v5.html in your browser.')">Open Prototype</button>
+        <button class="btn btn-ghost" onclick="alert('Open cloudschool-case-study.html for the full case study.')">View Case Study</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let currentTheme = 'dark';
+function toggleDHTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  const icon = document.getElementById('dhThemeIcon');
+  if (currentTheme === 'light') {
+    icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+  } else {
+    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  }
+}
+
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function showCopied(btn) {
+  const tokenBlock = `/* CloudSchool DS — Token Block v2.0 */\n:root {\n  --color-brand: #3D52E5;\n  --color-brand-hover: #3246d3;\n  --color-brand-alpha-20: rgba(61,82,229,0.18);\n  --color-bg-base: #121212;\n  --color-bg-surface: #1a1a1a;\n  --color-bg-elevated: #1f1f1f;\n  --border-subtle: #1e1e1e;\n  --border-standard: #2a2a2a;\n  --text-primary: #f0f0f0;\n  --text-secondary: #a0a0a0;\n  --text-tertiary: #6b6b6b;\n  --color-success: #22c55e;\n  --color-warning: #f59e0b;\n  --color-danger: #ef4444;\n  --color-info: #3b82f6;\n  --dur-fast: 120ms;\n  --dur-std: 220ms;\n  --dur-slow: 380ms;\n  --ease-out: cubic-bezier(0.16,1,0.3,1);\n  --radius-sm: 4px;\n  --radius-md: 6px;\n  --radius-lg: 10px;\n  --radius-pill: 9999px;\n}`;
+  navigator.clipboard.writeText(tokenBlock).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied to clipboard!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+function setActive(el) {
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  const title = el.textContent.trim();
+  document.getElementById('topbarTitle').textContent = title;
+}
+
+function filterContent(q) {
+  if (!q) {
+    document.querySelectorAll('.section-anchor').forEach(s => s.style.display = '');
+    return;
+  }
+  document.querySelectorAll('.section-anchor').forEach(s => {
+    const text = s.textContent.toLowerCase();
+    s.style.display = text.includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+
+// Scroll-spy
+const sections = document.querySelectorAll('.section-anchor');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+  navLinks.forEach(n => {
+    n.classList.remove('active');
+    if (n.getAttribute('href') === '#' + current) {
+      n.classList.add('active');
+      document.getElementById('topbarTitle').textContent = n.textContent.trim();
+    }
+  });
+});
+</script>
+</body>
+</html>

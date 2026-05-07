@@ -1,0 +1,328 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/* ── Enums ─────────────────────────────────────────────────── */
+
+enum Role {
+  ADMIN
+  FACULTY
+  STUDENT
+}
+
+enum ActiveStatus {
+  active
+  inactive
+}
+
+enum EnrollmentStatus {
+  enrolled
+  completed
+  dropped
+}
+
+enum GradeStatus {
+  passed
+  failed
+  pending
+}
+
+enum FeeStatus {
+  paid
+  unpaid
+  partial
+  overdue
+}
+
+enum PayrollStatus {
+  paid
+  pending
+  processing
+}
+
+enum AttendanceStatus {
+  present
+  absent
+  late
+  excused
+}
+
+/* ── Models ────────────────────────────────────────────────── */
+
+model Institution {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  logoUrl      String?
+  primaryColor String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  users        User[]
+  students     Student[]
+  faculty      Faculty[]
+  courses      Course[]
+  grades       Grade[]
+  fees         FeeTransaction[]
+  payroll      PayrollEntry[]
+  attendance   Attendance[]
+
+  @@map("institutions")
+}
+
+model User {
+  id            String      @id @default(cuid())
+  institutionId String
+  email         String
+  passwordHash  String
+  name          String
+  role          Role
+  avatarUrl     String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  student       Student?
+  faculty       Faculty?
+  accounts      Account[]
+  sessions      Session[]
+
+  @@unique([institutionId, email])
+  @@map("users")
+}
+
+model Student {
+  id            String       @id @default(cuid())
+  institutionId String
+  userId        String       @unique
+  studentId     String
+  name          String
+  email         String
+  phone         String?
+  department    String
+  year          Int
+  gpa           Decimal      @default(0) @db.Decimal(3, 2)
+  status        ActiveStatus @default(active)
+  avatarUrl     String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  institution   Institution  @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  enrollments   Enrollment[]
+  grades        Grade[]
+  fees          FeeTransaction[]
+  attendance    Attendance[]
+
+  @@unique([institutionId, studentId])
+  @@index([institutionId, department])
+  @@index([institutionId, status])
+  @@map("students")
+}
+
+model Faculty {
+  id            String       @id @default(cuid())
+  institutionId String
+  userId        String       @unique
+  facultyId     String
+  name          String
+  email         String
+  phone         String?
+  department    String
+  designation   String
+  salary        Decimal      @db.Decimal(10, 2)
+  status        ActiveStatus @default(active)
+  avatarUrl     String?
+  joinDate      DateTime
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  institution   Institution  @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courses       Course[]
+  payroll       PayrollEntry[]
+
+  @@unique([institutionId, facultyId])
+  @@index([institutionId, department])
+  @@map("faculty")
+}
+
+model Course {
+  id            String       @id @default(cuid())
+  institutionId String
+  courseCode    String
+  name          String
+  department    String
+  credits       Int
+  semester      String
+  facultyId     String?
+  capacity      Int          @default(30)
+  enrolled      Int          @default(0)
+  status        ActiveStatus @default(active)
+  schedule      String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  institution   Institution  @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  faculty       Faculty?     @relation(fields: [facultyId], references: [id], onDelete: SetNull)
+  enrollments   Enrollment[]
+  grades        Grade[]
+  attendance    Attendance[]
+
+  @@unique([institutionId, courseCode, semester])
+  @@index([institutionId, department])
+  @@map("courses")
+}
+
+model Enrollment {
+  id         String           @id @default(cuid())
+  studentId  String
+  courseId   String
+  semester   String
+  status     EnrollmentStatus @default(enrolled)
+  enrolledAt DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  student    Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course     Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  grades     Grade[]
+
+  @@unique([studentId, courseId, semester])
+  @@map("enrollments")
+}
+
+model Grade {
+  id            String      @id @default(cuid())
+  enrollmentId  String
+  studentId     String
+  courseId      String
+  institutionId String
+  semester      String
+  midterm       Decimal?    @db.Decimal(5, 2)
+  final         Decimal?    @db.Decimal(5, 2)
+  assignments   Decimal?    @db.Decimal(5, 2)
+  total         Decimal?    @db.Decimal(5, 2)
+  letterGrade   String?
+  status        GradeStatus @default(pending)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  enrollment    Enrollment  @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  student       Student     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course        Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+
+  @@unique([enrollmentId])
+  @@index([institutionId, semester])
+  @@map("grades")
+}
+
+model FeeTransaction {
+  id            String      @id @default(cuid())
+  institutionId String
+  studentId     String
+  feeType       String
+  amount        Decimal     @db.Decimal(10, 2)
+  paid          Decimal     @default(0) @db.Decimal(10, 2)
+  due           Decimal     @db.Decimal(10, 2)
+  dueDate       DateTime
+  paidDate      DateTime?
+  status        FeeStatus   @default(unpaid)
+  semester      String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  student       Student     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([institutionId, status])
+  @@index([institutionId, studentId])
+  @@map("fee_transactions")
+}
+
+model PayrollEntry {
+  id            String        @id @default(cuid())
+  institutionId String
+  facultyId     String
+  month         String        // "YYYY-MM"
+  baseSalary    Decimal       @db.Decimal(10, 2)
+  allowances    Decimal       @default(0) @db.Decimal(10, 2)
+  deductions    Decimal       @default(0) @db.Decimal(10, 2)
+  netSalary     Decimal       @db.Decimal(10, 2)
+  status        PayrollStatus @default(pending)
+  paidDate      DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  institution   Institution   @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  faculty       Faculty       @relation(fields: [facultyId], references: [id], onDelete: Cascade)
+
+  @@unique([facultyId, month])
+  @@index([institutionId, month])
+  @@map("payroll_entries")
+}
+
+model Attendance {
+  id            String           @id @default(cuid())
+  institutionId String
+  studentId     String
+  courseId      String
+  date          DateTime         @db.Date
+  status        AttendanceStatus @default(present)
+  createdAt     DateTime         @default(now())
+
+  institution   Institution      @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  student       Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course        Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, courseId, date])
+  @@index([institutionId, courseId, date])
+  @@map("attendance")
+}
+
+/* ── NextAuth.js required tables ───────────────────────────── */
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}

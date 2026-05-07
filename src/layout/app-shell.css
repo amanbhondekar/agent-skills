@@ -1,0 +1,188 @@
+/* ============================================================
+   ADMIN APP SHELL
+   Fixed 240px sidebar + 56px topbar + main-content flex column.
+   Mobile: sidebar becomes overlay; see mobile.css.
+   ============================================================ */
+
+.app-shell {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--primitive-neutral-900);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 100;
+  transition: transform var(--dur-std) var(--ease-out);
+}
+
+.sidebar-logo {
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-10);
+  padding: 0 var(--sp-20);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  width: 28px; height: 28px;
+  background: var(--color-brand);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.logo-mark svg { width: 16px; height: 16px; fill: #fff; }
+
+.logo-text { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; color: var(--text-primary); }
+.logo-text span { color: var(--text-brand); }
+
+.sidebar-nav {
+  flex: 1;
+  padding: var(--sp-12) var(--sp-10);
+  overflow-y: auto;
+}
+
+.nav-section-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--text-tertiary);
+  padding: var(--sp-16) var(--sp-10) var(--sp-4);
+}
+
+/* nav-item is always a <button> for keyboard & screen-reader support */
+.nav-item {
+  display: flex; align-items: center; gap: var(--sp-10);
+  padding: var(--sp-8) var(--sp-10);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 13.5px; font-weight: 400;
+  cursor: pointer;
+  margin-bottom: 2px;
+  user-select: none;
+  width: 100%; text-align: left;
+  background: none; border: none; font-family: inherit;
+}
+.nav-item:hover { background: var(--color-bg-overlay); color: var(--text-primary); }
+.nav-item.active {
+  background: var(--color-brand-alpha-10);
+  color: var(--text-brand);
+  font-weight: 500;
+}
+.nav-item.active .nav-icon { opacity: 1; }
+
+.nav-icon {
+  width: 18px; height: 18px; flex-shrink: 0; opacity: 0.6;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-icon svg { width: 16px; height: 16px; }
+
+.nav-badge {
+  margin-left: auto;
+  background: var(--color-brand);
+  color: #fff;
+  font-size: 10px; font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  min-width: 18px; text-align: center;
+}
+
+/* ── Sidebar footer (user card) ──────────────────────────── */
+.sidebar-footer {
+  padding: var(--sp-12) var(--sp-10);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* user-card is always a <button> */
+.user-card {
+  display: flex; align-items: center; gap: var(--sp-10);
+  padding: var(--sp-8) var(--sp-10);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  width: 100%; text-align: left;
+  background: none; border: none; font-family: inherit;
+}
+.user-card:hover { background: var(--color-bg-overlay); }
+
+.user-avatar {
+  width: 32px; height: 32px; border-radius: var(--radius-circle);
+  background: var(--color-brand);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: #fff; flex-shrink: 0;
+}
+
+.user-info { flex: 1; min-width: 0; }
+.user-name { font-size: 13px; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-role { font-size: 11px; color: var(--text-tertiary); }
+
+/* ── Main content ────────────────────────────────────────── */
+.main-content {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Topbar ──────────────────────────────────────────────── */
+.topbar {
+  height: var(--topbar-h);
+  min-height: var(--topbar-h);
+  background: var(--color-bg-base);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex; align-items: center;
+  padding: 0 var(--sp-24);
+  gap: var(--sp-16);
+  position: sticky; top: 0; z-index: 50;
+}
+.topbar-title { font-size: 15px; font-weight: 600; flex: 1; }
+.topbar-actions { display: flex; align-items: center; gap: var(--sp-8); }
+
+/* icon-btn is always a <button> with aria-label */
+.icon-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: none; border: none;
+}
+.icon-btn:hover { background: var(--color-bg-overlay); color: var(--text-primary); }
+.icon-btn svg { width: 16px; height: 16px; }
+
+/* Notification indicator dot */
+.notif-dot { position: relative; }
+.notif-dot::after {
+  content: '';
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 6px; height: 6px;
+  border-radius: var(--radius-circle);
+  background: var(--color-brand);
+  border: 2px solid var(--color-bg-base);
+}
+
+/* ── Page body ───────────────────────────────────────────── */
+.page-body {
+  flex: 1;
+  padding: var(--sp-28) var(--sp-24) var(--sp-48);
+}
+
+/* Consistent section spacing within page-body */
+.page-section { margin-bottom: var(--sp-24); }
+.page-section:last-child { margin-bottom: 0; }
+
+/* Light mode sidebar always stays visually distinct */
+[data-theme="light"] .sidebar {
+  background: #ffffff;
+  border-right-color: var(--border-subtle);
+}
+[data-theme="light"] .topbar { background: var(--color-bg-base); }

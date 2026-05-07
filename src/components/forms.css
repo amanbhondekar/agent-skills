@@ -1,0 +1,83 @@
+/* ============================================================
+   FORM ELEMENTS
+   All inputs share height: 40px, --radius-md, and the same
+   focus ring. Validation state lives on .form-group.has-error.
+   ============================================================ */
+
+.form-group { display: flex; flex-direction: column; gap: var(--sp-6); }
+
+.form-label { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
+.form-label .required { color: var(--color-danger); margin-left: 2px; }
+
+/* ── Text input ──────────────────────────────────────────── */
+.form-input {
+  height: 40px;
+  background: var(--color-bg-canvas);
+  border: 1px solid var(--border-standard);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 13.5px; font-family: var(--font-sans);
+  padding: 0 var(--sp-12);
+  outline: none; width: 100%;
+}
+.form-input::placeholder { color: var(--text-tertiary); }
+.form-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-brand);
+  background: var(--color-bg-surface);
+}
+.form-input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Select ──────────────────────────────────────────────── */
+.form-select {
+  height: 40px;
+  background: var(--color-bg-canvas);
+  border: 1px solid var(--border-standard);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 13.5px; font-family: var(--font-sans);
+  padding: 0 36px 0 var(--sp-12);
+  outline: none; width: 100%; cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b6b6b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+.form-select:focus { border-color: var(--border-focus); box-shadow: var(--shadow-brand); }
+.form-select option { background: var(--color-bg-elevated); }
+.form-select:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Textarea ────────────────────────────────────────────── */
+.form-textarea {
+  background: var(--color-bg-canvas);
+  border: 1px solid var(--border-standard);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 13.5px; font-family: var(--font-sans);
+  padding: var(--sp-10) var(--sp-12);
+  outline: none; width: 100%;
+  resize: vertical; min-height: 88px;
+}
+.form-textarea::placeholder { color: var(--text-tertiary); }
+.form-textarea:focus { border-color: var(--border-focus); box-shadow: var(--shadow-brand); }
+.form-textarea:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Supporting text ─────────────────────────────────────── */
+.form-hint  { font-size: 11px; color: var(--text-tertiary); }
+.form-error { font-size: 11px; color: var(--color-danger); display: none; }
+
+/* ── Validation state ────────────────────────────────────── */
+/* Apply .has-error to .form-group via JS */
+.form-group.has-error .form-error { display: block; }
+.form-group.has-error .form-label { color: var(--color-danger); }
+.form-group.has-error .form-input  { border-color: var(--color-danger); }
+.form-group.has-error .form-select { border-color: var(--color-danger); }
+.form-group.has-error .form-textarea { border-color: var(--color-danger); }
+.form-group.has-error .form-input:focus  { box-shadow: 0 0 0 3px var(--color-danger-alpha); }
+.form-group.has-error .form-select:focus { box-shadow: 0 0 0 3px var(--color-danger-alpha); }
+.form-group.has-error .form-textarea:focus { box-shadow: 0 0 0 3px var(--color-danger-alpha); }
+
+/* ── Suppress default focus outline; box-shadow is the ring ─ */
+.form-input:focus-visible,
+.form-select:focus-visible,
+.form-textarea:focus-visible { outline: none; }

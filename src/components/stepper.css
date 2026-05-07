@@ -1,0 +1,38 @@
+/* ============================================================
+   STEPPER / MULTI-STEP PROGRESS
+   ============================================================ */
+
+.stepper {
+  display: flex; align-items: center; gap: 0;
+  margin-bottom: var(--sp-32);
+}
+
+.step { display: flex; align-items: center; flex: 1; }
+.step:last-child { flex: 0; }
+
+.step-circle {
+  width: 28px; height: 28px; border-radius: var(--radius-circle);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; flex-shrink: 0;
+  border: 2px solid var(--border-standard);
+  color: var(--text-tertiary);
+  background: var(--color-bg-canvas);
+  transition: all var(--dur-std) var(--ease-out);
+}
+.step.done   .step-circle { background: var(--color-success); border-color: var(--color-success); color: #fff; }
+.step.active .step-circle { background: var(--color-brand);   border-color: var(--color-brand);   color: #fff; }
+
+.step-line {
+  flex: 1; height: 1px;
+  background: var(--border-standard);
+  margin: 0 var(--sp-8);
+}
+.step.done .step-line { background: var(--color-success); }
+
+.step-label {
+  font-size: 11px; color: var(--text-tertiary);
+  margin-top: var(--sp-6);
+  text-align: center; white-space: nowrap;
+}
+.step.active .step-label { color: var(--text-brand); font-weight: 500; }
+.step.done   .step-label { color: var(--color-success); }

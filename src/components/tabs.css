@@ -1,0 +1,33 @@
+/* ============================================================
+   TABS
+   Underline tab bar. Tab elements must be <button> for keyboard
+   navigation. Use role="tablist" + role="tab" + aria-selected.
+   ============================================================ */
+
+.tab-bar {
+  display: flex; align-items: center; gap: 2px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: var(--sp-20);
+}
+
+/* tab must always be a <button> */
+.tab {
+  padding: var(--sp-10) var(--sp-16);
+  font-size: 13.5px; font-weight: 400;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  user-select: none; white-space: nowrap;
+  background: none; border-left: none; border-right: none; border-top: none;
+  border-bottom: 2px solid transparent;
+  font-family: inherit;
+}
+.tab:hover { color: var(--text-secondary); }
+.tab.active { color: var(--text-brand); border-bottom-color: var(--color-brand); font-weight: 500; }
+
+.tab-content { display: none; }
+.tab-content.active {
+  display: block;
+  animation: pageFadeIn var(--dur-std) var(--ease-out);
+}

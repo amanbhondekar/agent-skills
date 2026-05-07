@@ -1,0 +1,147 @@
+/* ============================================================
+   SEARCH — INLINE BAR + FILTER CHIPS + GLOBAL SEARCH MODAL
+   ============================================================ */
+
+/* ── Inline search bar ───────────────────────────────────── */
+.search-bar-wrap {
+  display: flex; align-items: center;
+  background: var(--color-bg-canvas);
+  border: 1px solid var(--border-standard);
+  border-radius: var(--radius-md);
+  padding: 0 var(--sp-12);
+  gap: var(--sp-8);
+  height: 38px;
+  flex: 1; max-width: 340px;
+}
+.search-bar-wrap:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-brand);
+}
+.search-bar-wrap svg { width: 14px; height: 14px; color: var(--text-tertiary); flex-shrink: 0; }
+.search-bar-wrap input {
+  border: none; background: transparent; outline: none;
+  color: var(--text-primary); font-size: 13px;
+  font-family: var(--font-sans); flex: 1; min-width: 0;
+}
+.search-bar-wrap input::placeholder { color: var(--text-tertiary); }
+
+/* ── Filter chips ────────────────────────────────────────── */
+/* filter-chip should be a <button> with aria-pressed */
+.filter-chip {
+  display: inline-flex; align-items: center; gap: var(--sp-6);
+  height: 32px; padding: 0 var(--sp-12);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-standard);
+  background: var(--color-bg-canvas);
+  font-size: 12.5px; font-weight: 400; color: var(--text-secondary);
+  cursor: pointer; white-space: nowrap;
+  user-select: none;
+  font-family: inherit;
+}
+.filter-chip:hover { border-color: var(--border-prominent); color: var(--text-primary); }
+.filter-chip.active { border-color: var(--color-brand); color: var(--text-brand); background: var(--color-brand-alpha-10); }
+.filter-chip[aria-pressed="true"] { border-color: var(--color-brand); color: var(--text-brand); background: var(--color-brand-alpha-10); }
+.filter-chip svg { width: 12px; height: 12px; }
+
+/* ── Global search overlay ───────────────────────────────── */
+/* Opened via Cmd/Ctrl+K or search icon. Uses opacity toggle
+   (not display) so CSS transitions work correctly. */
+.search-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  z-index: 600;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 80px;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--dur-std);
+}
+.search-overlay.open { opacity: 1; pointer-events: all; }
+
+.search-modal {
+  width: 90%; max-width: 620px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--border-standard);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  transform: scale(0.97) translateY(-8px);
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.search-overlay.open .search-modal { transform: scale(1) translateY(0); }
+
+.search-input-row {
+  display: flex; align-items: center; gap: var(--sp-12);
+  padding: var(--sp-16) var(--sp-20);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.search-input-row svg { width: 18px; height: 18px; color: var(--text-tertiary); flex-shrink: 0; }
+.search-input-row input {
+  flex: 1; border: none; background: transparent; outline: none;
+  font-size: 16px; font-family: var(--font-sans); color: var(--text-primary);
+}
+.search-input-row input::placeholder { color: var(--text-tertiary); }
+
+/* Keyboard shortcut pill */
+.search-kbd {
+  font-size: 11px; color: var(--text-tertiary);
+  background: var(--color-bg-canvas); border: 1px solid var(--border-standard);
+  border-radius: 4px; padding: 2px 6px; font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.search-results { max-height: 420px; overflow-y: auto; }
+
+/* Sticky section label inside results */
+.search-section-label {
+  padding: var(--sp-10) var(--sp-20) var(--sp-6);
+  font-size: 10px; font-weight: 600; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--text-tertiary);
+  background: var(--color-bg-canvas);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky; top: 0;
+}
+
+/* search-result-item must be a <button> for keyboard navigation */
+.search-result-item {
+  display: flex; align-items: center; gap: var(--sp-12);
+  padding: var(--sp-10) var(--sp-20);
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-subtle);
+  width: 100%; text-align: left;
+  background: none; border-left: none; border-right: none; border-top: none;
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: inherit;
+}
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover,
+.search-result-item.focused { background: var(--color-brand-alpha-10); }
+
+.search-result-icon {
+  width: 32px; height: 32px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 13px; font-weight: 700; color: #fff;
+}
+.search-result-icon svg { width: 14px; height: 14px; }
+
+.search-result-content { flex: 1; min-width: 0; }
+.search-result-title { font-size: 13.5px; font-weight: 500; }
+.search-result-sub   { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+.search-result-tag   { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; color: var(--text-tertiary); text-transform: uppercase; }
+
+.search-empty {
+  padding: var(--sp-40) var(--sp-24);
+  text-align: center; color: var(--text-tertiary); font-size: 13px;
+}
+
+.search-footer {
+  display: flex; align-items: center; gap: var(--sp-16);
+  padding: var(--sp-10) var(--sp-20);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--color-bg-canvas);
+}
+.search-hint { display: flex; align-items: center; gap: var(--sp-6); font-size: 11px; color: var(--text-tertiary); }
+.search-hint .search-kbd { font-size: 10px; }
+
+/* Search highlight */
+em.hl { font-style: normal; color: var(--text-brand); font-weight: 600; }

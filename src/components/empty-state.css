@@ -1,0 +1,15 @@
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: var(--sp-12);
+  padding: var(--sp-64) var(--sp-24); text-align: center;
+}
+
+.empty-icon { width: 48px; height: 48px; color: var(--text-tertiary); }
+.empty-icon svg { width: 48px; height: 48px; }
+
+.empty-title { font-size: 15px; font-weight: 600; }
+.empty-desc  { font-size: 13px; color: var(--text-tertiary); max-width: 300px; }

@@ -1,0 +1,111 @@
+/* ============================================================
+   NOTIFICATION PANEL
+   Slide-in drawer from the right. Uses opacity+pointer-events
+   toggle on backdrop and translateX on panel.
+
+   Required ARIA:
+     - Panel: role="dialog" aria-label="Notifications"
+     - Tab bar: role="tablist"
+     - Each tab: role="tab" aria-selected
+   When open, set aria-modal="true" on the panel.
+   ============================================================ */
+
+/* ── Backdrop ────────────────────────────────────────────── */
+.notif-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(2px);
+  z-index: 299;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--dur-std);
+}
+.notif-backdrop.open { opacity: 1; pointer-events: all; }
+
+/* ── Panel ───────────────────────────────────────────────── */
+.notif-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 380px;
+  background: var(--color-bg-elevated);
+  border-left: 1px solid var(--border-subtle);
+  z-index: 300;
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--dur-slow) var(--ease-out);
+  box-shadow: var(--shadow-xl);
+}
+.notif-panel.open { transform: translateX(0); }
+
+.notif-header {
+  padding: var(--sp-16) var(--sp-20);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+
+/* ── Tab bar ─────────────────────────────────────────────── */
+.notif-tabs {
+  display: flex; gap: 2px;
+  padding: var(--sp-10) var(--sp-16);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+/* notif-tab must be a <button> */
+.notif-tab {
+  padding: var(--sp-6) var(--sp-12);
+  border-radius: var(--radius-pill);
+  font-size: 12px; font-weight: 500;
+  cursor: pointer; color: var(--text-secondary);
+  background: none; border: none; font-family: inherit;
+}
+.notif-tab:hover { background: var(--color-bg-overlay); color: var(--text-primary); }
+.notif-tab.active { background: var(--color-brand-alpha-10); color: var(--text-brand); }
+
+/* ── List ────────────────────────────────────────────────── */
+.notif-list { flex: 1; overflow-y: auto; }
+
+.notif-item {
+  display: flex; gap: var(--sp-12);
+  padding: var(--sp-12) var(--sp-20);
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+  position: relative;
+}
+.notif-item:hover { background: var(--color-bg-canvas); }
+.notif-item.unread { background: var(--color-brand-alpha-10); }
+.notif-item.unread:hover { background: var(--color-brand-alpha-20); }
+/* Unread dot indicator */
+.notif-item.unread::before {
+  content: '';
+  position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+  width: 6px; height: 6px;
+  border-radius: 50%; background: var(--color-brand);
+}
+
+/* ── Icon ────────────────────────────────────────────────── */
+.notif-icon {
+  width: 36px; height: 36px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.notif-icon svg { width: 16px; height: 16px; }
+.notif-icon.fee     { background: var(--color-warning-alpha); color: var(--color-warning); }
+.notif-icon.att     { background: var(--color-danger-alpha);  color: var(--color-danger); }
+.notif-icon.grade   { background: var(--color-brand-alpha-20); color: var(--text-brand); }
+.notif-icon.enrol   { background: var(--color-success-alpha); color: var(--color-success); }
+.notif-icon.payroll { background: var(--color-info-alpha);    color: var(--color-info); }
+.notif-icon.system  { background: var(--color-bg-overlay);    color: var(--text-secondary); }
+
+/* ── Content ─────────────────────────────────────────────── */
+.notif-content { flex: 1; min-width: 0; }
+.notif-title { font-size: 13px; font-weight: 500; margin-bottom: 2px; line-height: 1.35; }
+.notif-desc  { font-size: 12px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 4px; }
+.notif-time  { font-size: 11px; color: var(--text-tertiary); }
+
+/* ── Footer ──────────────────────────────────────────────── */
+.notif-footer {
+  padding: var(--sp-12) var(--sp-20);
+  border-top: 1px solid var(--border-subtle);
+  display: flex; gap: var(--sp-8);
+  flex-shrink: 0;
+}

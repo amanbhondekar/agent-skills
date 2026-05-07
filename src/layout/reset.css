@@ -1,0 +1,71 @@
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  /* Smooth theme transitions */
+  transition: background var(--dur-std), color var(--dur-std);
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, select, textarea { font-family: inherit; }
+img { display: block; max-width: 100%; }
+ul, ol { list-style: none; }
+
+/* ── Scoped theme transitions ────────────────────────────── */
+/* Applied only to elements likely to change between themes.
+   Avoids animating SVG paths, transforms, or layout properties. */
+.sidebar, .topbar, .card, .stat-card, .modal, .toast,
+.notif-panel, .badge, .btn, .form-input, .form-select,
+.form-textarea, .search-bar-wrap, .table-wrap,
+th, td, .nav-item, .sp-nav-item, .tab, .filter-chip {
+  transition:
+    background-color var(--dur-std),
+    border-color var(--dur-std),
+    color var(--dur-fast);
+}
+
+/* Interactive elements get fast transitions for responsiveness */
+.btn, input, select, textarea,
+.nav-item, .sp-nav-item, .tab,
+.badge, .filter-chip {
+  transition:
+    background-color var(--dur-fast),
+    border-color var(--dur-fast),
+    color var(--dur-fast),
+    box-shadow var(--dur-fast),
+    transform var(--dur-fast),
+    opacity var(--dur-fast);
+}
+
+/* ── Page router ─────────────────────────────────────────── */
+.page { display: none; width: 100%; min-height: 100vh; }
+.page.active { display: flex; }
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-fade-in { animation: pageFadeIn var(--dur-slow) var(--ease-out) both; }
+
+/* Used for spinner in login button */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Decorative floating elements (login page) */
+@keyframes float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+@keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes float3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }

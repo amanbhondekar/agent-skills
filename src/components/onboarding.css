@@ -1,0 +1,103 @@
+/* ============================================================
+   ONBOARDING WIZARD
+   Multi-step setup flow. Progress tracked via .ob-dot states
+   and .ob-progress-fill width.
+   ============================================================ */
+
+.ob-page {
+  min-height: 100vh;
+  background: var(--color-bg-base);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: var(--sp-24);
+}
+
+.ob-card {
+  width: 100%; max-width: 640px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* ── Progress bar ────────────────────────────────────────── */
+.ob-progress-bar {
+  height: 3px;
+  background: var(--border-subtle);
+}
+.ob-progress-fill {
+  height: 100%;
+  background: var(--color-brand);
+  border-radius: var(--radius-pill);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+
+/* ── Layout sections ─────────────────────────────────────── */
+.ob-header {
+  padding: var(--sp-28) var(--sp-32) var(--sp-20);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.ob-body   { padding: var(--sp-24) var(--sp-32); }
+.ob-footer {
+  padding: var(--sp-16) var(--sp-32);
+  border-top: 1px solid var(--border-subtle);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--color-bg-canvas);
+}
+
+/* ── Step dot indicators ─────────────────────────────────── */
+.ob-step-dots {
+  display: flex; gap: var(--sp-6);
+  align-items: center; justify-content: center;
+  margin-top: var(--sp-20);
+}
+.ob-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--border-prominent);
+  transition: all var(--dur-std) var(--ease-out);
+}
+.ob-dot.active { width: 20px; border-radius: var(--radius-pill); background: var(--color-brand); }
+.ob-dot.done   { background: var(--color-success); }
+
+/* ── Feature selection cards ─────────────────────────────── */
+/* ob-feature-card must be a <button> */
+.ob-feature-card {
+  display: flex; gap: var(--sp-12); align-items: flex-start;
+  padding: var(--sp-12);
+  background: var(--color-bg-canvas);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  width: 100%; text-align: left; font-family: inherit;
+}
+.ob-feature-card.selected {
+  border-color: var(--color-brand);
+  background: var(--color-brand-alpha-10);
+}
+
+.ob-feature-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ob-feature-icon svg { width: 18px; height: 18px; }
+
+.ob-checkmark {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid var(--border-prominent);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-left: auto;
+}
+.ob-feature-card.selected .ob-checkmark {
+  background: var(--color-brand); border-color: var(--color-brand);
+}
+.ob-checkmark svg { width: 10px; height: 10px; opacity: 0; }
+.ob-feature-card.selected .ob-checkmark svg { opacity: 1; }
+
+/* ── Mobile ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ob-header { padding: var(--sp-20) var(--sp-20) var(--sp-16); }
+  .ob-body   { padding: var(--sp-16) var(--sp-20); }
+  .ob-footer { padding: var(--sp-12) var(--sp-20); }
+}

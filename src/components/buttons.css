@@ -1,0 +1,56 @@
+/* ============================================================
+   BUTTONS
+   All buttons use pill radius (9999px) — the only component
+   that does so. Creates an immediate visual grammar for
+   primary interactivity.
+   ============================================================ */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--sp-6);
+  font-family: var(--font-sans);
+  font-weight: 500; font-size: 13.5px;
+  border-radius: var(--radius-pill);
+  padding: 0 var(--sp-16);
+  height: 36px;
+  cursor: pointer; border: none;
+  white-space: nowrap; user-select: none;
+}
+.btn:active { transform: scale(0.97); }
+.btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+/* ── Variants ────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--color-brand);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--color-brand-hover);
+  box-shadow: var(--shadow-brand);
+}
+
+.btn-secondary {
+  background: var(--color-bg-overlay);
+  color: var(--text-primary);
+  border: 1px solid var(--border-standard);
+}
+.btn-secondary:hover { background: var(--color-bg-elevated); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.btn-ghost:hover { background: var(--color-bg-overlay); color: var(--text-primary); }
+
+.btn-danger {
+  background: var(--color-danger-alpha);
+  color: var(--color-danger);
+  border: 1px solid rgba(239,68,68,0.25);
+}
+.btn-danger:hover { background: var(--color-danger); color: #fff; }
+
+/* ── Sizes ───────────────────────────────────────────────── */
+/* Default: height 36px */
+.btn-sm { height: 28px; padding: 0 var(--sp-12); font-size: 12px; }
+.btn-lg { height: 44px; padding: 0 var(--sp-24); font-size: 15px; }

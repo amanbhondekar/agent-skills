@@ -1,0 +1,154 @@
+/* ============================================================
+   CLOUDSCHOOL DESIGN SYSTEM — DESIGN TOKENS v2.0
+   Three-tier architecture: primitive → semantic → component alias
+   Never reference primitive tokens directly in components.
+   ============================================================ */
+
+:root {
+  /* ── Brand ─────────────────────────────────────────────── */
+  --color-brand:          #3D52E5;
+  --color-brand-hover:    #3246d3;
+  --color-brand-alpha-20: rgba(61,82,229,0.18);
+  --color-brand-alpha-10: rgba(61,82,229,0.10);
+
+  /* ── Primitives ─────────────────────────────────────────── */
+  --primitive-neutral-900: #0f0f0f;
+  --primitive-neutral-850: #121212;
+  --primitive-neutral-800: #171717;
+  --primitive-neutral-750: #1a1a1a;
+  --primitive-neutral-700: #1f1f1f;
+  --primitive-neutral-600: #2a2a2a;
+  --primitive-neutral-500: #363636;
+  --primitive-neutral-400: #4a4a4a;
+  --primitive-neutral-300: #6b6b6b;
+  --primitive-neutral-200: #a0a0a0;
+  --primitive-neutral-100: #d4d4d4;
+  --primitive-neutral-50:  #f0f0f0;
+
+  /* ── Semantic — Backgrounds ─────────────────────────────── */
+  --color-bg-deepest:  #0f0f0f;
+  --color-bg-base:     #121212;
+  --color-bg-canvas:   #171717;
+  --color-bg-surface:  #1a1a1a;
+  --color-bg-elevated: #1f1f1f;
+  --color-bg-overlay:  #242424;
+
+  /* ── Semantic — Borders ─────────────────────────────────── */
+  --border-subtle:    #1e1e1e;
+  --border-standard:  #2a2a2a;
+  --border-prominent: #363636;
+  --border-focus:     #3D52E5;
+
+  /* ── Semantic — Text ────────────────────────────────────── */
+  --text-primary:   #f0f0f0;
+  --text-secondary: #a0a0a0;
+  /* WCAG fix: #6b6b6b fails 4.5:1 on dark. Dark mode overrides to #8a8a8a below. */
+  --text-tertiary:  #6b6b6b;
+  --text-disabled:  #4a4a4a;
+  --text-inverse:   #0f0f0f;
+  /* WCAG fix: #3D52E5 fails 4.5:1 as text on dark surfaces (~3.5:1).
+     Dark mode overrides to #7B8FF5 (~5.2:1) below. */
+  --text-brand:     #3D52E5;
+  --text-on-brand:  #ffffff;
+
+  /* ── Semantic — Status ──────────────────────────────────── */
+  --color-success:       #22c55e;
+  --color-success-alpha: rgba(34,197,94,0.15);
+  --color-warning:       #f59e0b;
+  --color-warning-alpha: rgba(245,158,11,0.15);
+  --color-danger:        #ef4444;
+  --color-danger-alpha:  rgba(239,68,68,0.15);
+  --color-info:          #3b82f6;
+  --color-info-alpha:    rgba(59,130,246,0.15);
+
+  /* ── Spacing (4px grid) ─────────────────────────────────── */
+  --sp-2:   2px;  --sp-4:   4px;  --sp-6:   6px;  --sp-8:   8px;
+  --sp-10: 10px; --sp-12: 12px; --sp-16: 16px; --sp-20: 20px;
+  --sp-24: 24px; --sp-28: 28px; --sp-32: 32px; --sp-40: 40px;
+  --sp-48: 48px; --sp-56: 56px; --sp-64: 64px;
+
+  /* ── Radius ─────────────────────────────────────────────── */
+  --radius-sm:     4px;
+  --radius-md:     6px;
+  --radius-lg:     10px;
+  --radius-xl:     14px;
+  --radius-pill:   9999px;
+  --radius-circle: 50%;
+
+  /* ── Shadows ────────────────────────────────────────────── */
+  --shadow-sm:    0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md:    0 4px 12px rgba(0,0,0,0.5);
+  --shadow-lg:    0 8px 28px rgba(0,0,0,0.6);
+  --shadow-xl:    0 16px 48px rgba(0,0,0,0.7);
+  --shadow-brand: 0 0 0 3px var(--color-brand-alpha-20);
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', 'Fira Code', monospace;
+
+  /* ── Motion ─────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:    120ms;
+  --dur-std:     220ms;
+  --dur-slow:    380ms;
+
+  /* ── Focus ring ─────────────────────────────────────────── */
+  --focus-ring:        2px solid #3D52E5;
+  --focus-ring-offset: 2px;
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  --sidebar-w:    240px;
+  --topbar-h:     56px;
+  --sp-sidebar-w: 220px; /* student portal sidebar */
+}
+
+/* ── Light mode token overrides ──────────────────────────── */
+[data-theme="light"] {
+  --primitive-neutral-900: #ffffff;
+  --primitive-neutral-850: #f8f8f8;
+  --primitive-neutral-800: #f2f2f2;
+  --primitive-neutral-750: #ececec;
+  --primitive-neutral-700: #e5e5e5;
+  --primitive-neutral-600: #d4d4d4;
+  --primitive-neutral-500: #b4b4b4;
+  --primitive-neutral-400: #8a8a8a;
+  --primitive-neutral-300: #6b6b6b;
+  --primitive-neutral-200: #3a3a3a;
+  --primitive-neutral-100: #1a1a1a;
+  --primitive-neutral-50:  #0f0f0f;
+
+  --color-bg-deepest:  #e8e8e8;
+  --color-bg-base:     #f4f4f5;
+  --color-bg-canvas:   #ffffff;
+  --color-bg-surface:  #ffffff;
+  --color-bg-elevated: #ffffff;
+  --color-bg-overlay:  #f0f0f0;
+
+  --border-subtle:    #e4e4e7;
+  --border-standard:  #d4d4d8;
+  --border-prominent: #a1a1aa;
+  --border-focus:     #3D52E5;
+
+  --text-primary:   #09090b;
+  --text-secondary: #52525b;
+  --text-tertiary:  #6b7280;
+  --text-disabled:  #a0a0aa;
+  --text-inverse:   #ffffff;
+  /* Brand text is legible at 4.6:1 on light bg — no override needed */
+  --text-brand:     #3D52E5;
+  --text-on-brand:  #ffffff;
+
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.10);
+  --shadow-lg:  0 8px 28px rgba(0,0,0,0.12);
+  --shadow-xl:  0 16px 48px rgba(0,0,0,0.16);
+}
+
+/* ── Dark mode accessibility overrides ──────────────────── */
+[data-theme="dark"] {
+  /* Boosted from #6b6b6b (3.0:1) to #8a8a8a (4.6:1) on dark bg */
+  --text-tertiary: #8a8a8a;
+  /* Boosted from #3D52E5 (3.5:1) to #7B8FF5 (5.2:1) on dark bg */
+  --text-brand: #7B8FF5;
+}

@@ -1,0 +1,59 @@
+/* ============================================================
+   TABLES
+   Always wrapped in .table-wrap for horizontal scroll on mobile.
+   thead gets a distinct background; row hover uses --bg-canvas.
+   ============================================================ */
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  -webkit-overflow-scrolling: touch;
+}
+
+table { width: 100%; border-collapse: collapse; }
+
+thead { background: var(--color-bg-canvas); }
+
+th {
+  padding: var(--sp-10) var(--sp-16);
+  text-align: left;
+  font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text-tertiary);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap; user-select: none;
+}
+th.sortable { cursor: pointer; }
+th.sortable:hover { color: var(--text-primary); }
+
+td {
+  padding: var(--sp-12) var(--sp-16);
+  font-size: 13.5px; font-weight: 400;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: var(--color-bg-canvas); }
+
+/* ── Cell variants ───────────────────────────────────────── */
+/* Monospace ID column */
+.td-id { font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary); }
+
+/* Avatar + name compound cell */
+.td-avatar { display: flex; align-items: center; gap: var(--sp-10); }
+.td-avatar-img {
+  width: 30px; height: 30px; border-radius: var(--radius-circle);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; color: #fff; flex-shrink: 0;
+}
+
+/* ── Table pagination row ────────────────────────────────── */
+.table-pagination-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-12) 0;
+}

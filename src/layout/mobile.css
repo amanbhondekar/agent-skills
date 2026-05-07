@@ -1,0 +1,122 @@
+/* ============================================================
+   MOBILE — RESPONSIVE LAYOUT
+   Breakpoints: 768px (tablet/mobile), 480px (small mobile)
+   ============================================================ */
+
+/* ── Hamburger button ────────────────────────────────────── */
+.hamburger {
+  display: none;
+  width: 36px; height: 36px;
+  border-radius: var(--radius-md);
+  align-items: center; justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer; flex-shrink: 0;
+  background: none; border: none;
+}
+.hamburger:hover { background: var(--color-bg-overlay); color: var(--text-primary); }
+.hamburger svg { width: 18px; height: 18px; }
+
+/* ── Sidebar overlay (mobile tap-to-close) ───────────────── */
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+}
+
+/* ── Bottom navigation (mobile only) ────────────────────── */
+.bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 60px;
+  background: var(--color-bg-elevated);
+  border-top: 1px solid var(--border-subtle);
+  z-index: 200;
+  padding: 0 var(--sp-4);
+  align-items: center;
+  justify-content: space-around;
+}
+
+.bottom-nav-item {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; flex: 1; padding: var(--sp-6) 0;
+  color: var(--text-tertiary);
+  cursor: pointer; border-radius: var(--radius-md);
+  font-size: 9px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+  background: none; border: none; font-family: inherit;
+}
+.bottom-nav-item svg { width: 20px; height: 20px; }
+.bottom-nav-item.active { color: var(--text-brand); }
+
+/* ── 768px breakpoint ────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-w: 260px;
+    --topbar-h:  52px;
+  }
+
+  /* Sidebar becomes slide-over */
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 200;
+    box-shadow: var(--shadow-xl);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay { display: block; }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding-bottom: 68px; /* space for bottom nav */
+  }
+
+  .topbar { padding: 0 var(--sp-12); }
+  .hamburger { display: flex; }
+  .topbar-title { font-size: 14px; }
+
+  .bottom-nav { display: flex; }
+
+  /* Collapse to 2 columns */
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+
+  .page-body { padding: var(--sp-16) var(--sp-12) var(--sp-48); }
+
+  .stat-value { font-size: 22px !important; }
+
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+
+  .modal { width: 95%; max-width: 95% !important; border-radius: var(--radius-lg); }
+  .modal-backdrop { align-items: flex-end; padding-bottom: 68px; }
+
+  .notif-panel { width: 100%; }
+
+  .row-between { flex-wrap: wrap; gap: var(--sp-10); }
+
+  /* Stepper: hide text labels on mobile, keep circles */
+  .step-label { display: none; }
+  .step-line  { margin: 0 var(--sp-4); }
+
+  /* icon-btn: expand hit area to 44px for touch targets */
+  .icon-btn {
+    position: relative;
+  }
+  .icon-btn::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+  }
+}
+
+/* ── 480px breakpoint ────────────────────────────────────── */
+@media (max-width: 480px) {
+  .grid-4 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .page-body { padding: var(--sp-12) var(--sp-10) var(--sp-48); }
+  .topbar-title {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

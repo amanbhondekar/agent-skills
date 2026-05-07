@@ -1,0 +1,49 @@
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+
+/* ── Grid helpers ────────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-16); }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--sp-16); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-16); }
+
+/* Stat row shorthand */
+.stats-row-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-16);
+  margin-bottom: var(--sp-24);
+}
+
+/* ── Flex helpers ────────────────────────────────────────── */
+.stack       { display: flex; flex-direction: column; gap: var(--sp-16); }
+.row         { display: flex; align-items: center; gap: var(--sp-12); }
+.row-between { display: flex; align-items: center; justify-content: space-between; }
+.spacer      { flex: 1; }
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider { height: 1px; background: var(--border-subtle); margin: var(--sp-20) 0; }
+
+/* ── Inline progress bar ─────────────────────────────────── */
+/* Usage: <div class="progress-track"><div class="progress-fill" style="width:75%"></div></div> */
+.progress-track {
+  height: 5px;
+  background: var(--border-subtle);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+.progress-fill.success { background: var(--color-success); }
+.progress-fill.warning { background: var(--color-warning); }
+.progress-fill.danger  { background: var(--color-danger); }
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-standard); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-prominent); }

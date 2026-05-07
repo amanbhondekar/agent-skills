@@ -1,0 +1,26 @@
+/* ============================================================
+   TYPOGRAPHY SCALE
+   Font: DM Sans (UI) + DM Mono (IDs, code, data values)
+   Weight rule: 400 body · 500 interactive · 600 labels · 700 data-only
+   ============================================================ */
+
+.t-hero    { font-size: 48px; font-weight: 700; line-height: 1.00; letter-spacing: -1.5px; }
+.t-h1      { font-size: 32px; font-weight: 600; line-height: 1.10; letter-spacing: -0.8px; }
+.t-h2      { font-size: 24px; font-weight: 600; line-height: 1.15; letter-spacing: -0.4px; }
+.t-h3      { font-size: 18px; font-weight: 600; line-height: 1.20; }
+.t-h4      { font-size: 16px; font-weight: 500; line-height: 1.30; }
+.t-body    { font-size: 14px; font-weight: 400; line-height: 1.55; }
+.t-small   { font-size: 12px; font-weight: 400; line-height: 1.50; }
+.t-caption { font-size: 11px; font-weight: 400; line-height: 1.45; }
+/* Section labels: uppercase + tracking, never used for headings */
+.t-label   { font-size: 11px; font-weight: 600; line-height: 1.00; letter-spacing: 1.6px; text-transform: uppercase; }
+/* Monospace: student IDs, receipt numbers, code values */
+.t-mono    { font-family: var(--font-mono); font-size: 12px; font-weight: 500; }
+
+/* Color utilities */
+.t-brand     { color: var(--text-brand); }
+.t-secondary { color: var(--text-secondary); }
+.t-tertiary  { color: var(--text-tertiary); }
+.t-success   { color: var(--color-success); }
+.t-warning   { color: var(--color-warning); }
+.t-danger    { color: var(--color-danger); }

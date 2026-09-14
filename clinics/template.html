@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="page-title">Swastha Healthcare — Clinic</title>
+<meta name="description" id="page-desc" content="A Swastha Healthcare clinic in Padmanabhanagar, Bengaluru." />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="./clinic.css" />
+<!-- schema.org LocalBusiness injected at runtime from CLINIC_DATA -->
+<script type="application/ld+json" id="ldjson"></script>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER — imported verbatim from homepage index.html.
+     Do not edit here; edit the homepage source and sync.
+     ============================================================ -->
+<header id="site-header" class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand" aria-label="Swastha Healthcare — Home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Swastha Healthcare</span>
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="/">Home</a></li>
+        <li class="has-dropdown">
+          <button class="nav-toggle" aria-expanded="false" aria-haspopup="true">Specialties <span class="caret" aria-hidden="true"></span></button>
+          <ul class="dropdown">
+            <li><a href="/#specialties">Obstetrics &amp; Gynaecology</a></li>
+            <li><a href="/#specialties">Pulmonology &amp; Respiratory Care</a></li>
+          </ul>
+        </li>
+        <li><a href="/#doctors">Doctors</a></li>
+        <li class="has-dropdown">
+          <button class="nav-toggle" aria-expanded="false" aria-haspopup="true">Our Clinics <span class="caret" aria-hidden="true"></span></button>
+          <ul class="dropdown">
+            <li><a href="/clinics/swastha-fertility-centre">Swastha Fertility Centre</a></li>
+            <li><a href="/clinics/swastha-healthcare">Swastha Healthcare</a></li>
+          </ul>
+        </li>
+        <li><a href="/blog">Blog</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-cta">
+      <a href="https://wa.me/918884007530" class="header-phone" aria-label="Call or WhatsApp us at 88840 07530">
+        <span class="wa-icon" aria-hidden="true"></span>
+        <span class="phone-text">88840 07530</span>
+      </a>
+      <a href="#cta" class="btn btn-primary btn-sm">Book Appointment</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<aside id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <span class="brand-name">Swastha Healthcare</span>
+    <button class="drawer-close" id="drawer-close" aria-label="Close menu">&times;</button>
+  </div>
+  <nav aria-label="Mobile">
+    <ul class="drawer-list">
+      <li><a href="/">Home</a></li>
+      <li>
+        <details>
+          <summary>Specialties</summary>
+          <ul>
+            <li><a href="/#specialties">Obstetrics &amp; Gynaecology</a></li>
+            <li><a href="/#specialties">Pulmonology &amp; Respiratory Care</a></li>
+          </ul>
+        </details>
+      </li>
+      <li><a href="/#doctors">Doctors</a></li>
+      <li>
+        <details>
+          <summary>Our Clinics</summary>
+          <ul>
+            <li><a href="/clinics/swastha-fertility-centre">Swastha Fertility Centre</a></li>
+            <li><a href="/clinics/swastha-healthcare">Swastha Healthcare</a></li>
+          </ul>
+        </details>
+      </li>
+      <li><a href="/blog">Blog</a></li>
+    </ul>
+    <div class="drawer-cta">
+      <a href="#cta" class="btn btn-primary btn-block">Book Appointment</a>
+      <a href="https://wa.me/918884007530" class="btn btn-outline btn-block">WhatsApp Us</a>
+      <a href="tel:+918884007530" class="drawer-phone">Call 88840 07530</a>
+    </div>
+  </nav>
+</aside>
+<div class="drawer-scrim" id="drawer-scrim"></div>
+
+<!-- ============ BREADCRUMB ============ -->
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <div class="container">
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li><a href="/#clinics">Our Clinics</a></li>
+      <li aria-current="page" data-slot="clinic-name">…</li>
+    </ol>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ 1. HERO ============ -->
+<section id="hero" class="clinic-hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Padmanabhanagar, Bengaluru</p>
+      <h1 data-slot="clinic-name">…</h1>
+      <ul class="tag-row tag-row-lg" data-slot="specialty-pills" aria-label="Specialties at this clinic"></ul>
+      <p class="lede" data-slot="overview">…</p>
+      <div class="hero-ctas">
+        <a href="#cta" class="btn btn-primary">Book Appointment</a>
+        <a href="#location" class="btn btn-outline" data-slot="directions-link">Get Directions</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-shape hero-shape-a"></div>
+      <div class="hero-shape hero-shape-b"></div>
+      <div class="hero-image-placeholder"><span class="ph-label">Clinic visual</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. ABOUT ============ -->
+<section id="about" class="clinic-about">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">About this clinic</p>
+      <h2>Built for calm, unhurried care.</h2>
+      <p class="section-sub" data-slot="story">…</p>
+    </header>
+
+    <div class="highlight-grid" data-slot="highlights"></div>
+  </div>
+</section>
+
+<!-- ============ 3. SERVICES ============ -->
+<section id="services" class="clinic-services">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Services</p>
+      <h2>What we treat here.</h2>
+    </header>
+    <div data-slot="services"></div>
+  </div>
+</section>
+
+<!-- ============ 4. DOCTORS ============ -->
+<section id="doctors" class="clinic-doctors">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Doctors at this clinic</p>
+      <h2>Care led by specialists you can reach.</h2>
+    </header>
+
+    <div class="doctor-grid" data-slot="doctors"></div>
+
+    <div class="section-foot">
+      <a href="#" data-slot="all-doctors-link" class="link-arrow">View All Doctors <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. LOCATION & VISIT INFO ============ -->
+<section id="location" class="clinic-location">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Location &amp; Visit info</p>
+      <h2>Find us in Padmanabhanagar.</h2>
+    </header>
+
+    <div class="location-grid">
+      <div class="location-info" itemscope itemtype="https://schema.org/LocalBusiness">
+        <meta itemprop="name" data-slot="clinic-name-meta" />
+        <address class="location-address" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+          <h3>Address</h3>
+          <p data-slot="address" itemprop="streetAddress">…</p>
+        </address>
+
+        <div class="location-contact">
+          <h3>Contact</h3>
+          <p>
+            <a href="tel:+918884007530" itemprop="telephone">88840 07530</a><br />
+            <a href="mailto:info@swasthaivf.com" itemprop="email">info@swasthaivf.com</a><br />
+            <a href="https://wa.me/918884007530">WhatsApp us</a>
+          </p>
+        </div>
+
+        <div class="location-hours">
+          <h3>Opening Hours</h3>
+          <p class="opening-hours" data-slot="hours" itemprop="openingHours">…</p>
+        </div>
+
+        <a href="#" data-slot="directions-btn" class="btn btn-primary" target="_blank" rel="noopener">Get Directions</a>
+      </div>
+
+      <!-- Replace src with Google Maps embed URL for the clinic addressed in CLINIC_DATA -->
+      <div id="clinic-map" class="clinic-map" data-address="" role="img" aria-label="Map location for this clinic">
+        <div class="map-placeholder">
+          <span class="ph-label">Google Maps embed</span>
+          <small data-slot="map-address"></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. CTA BANNER ============ -->
+<section id="cta" class="cta-banner">
+  <div class="container cta-inner">
+    <h2 data-slot="cta-headline">…</h2>
+    <p>Same-day slots are often available. Book online, or reach us on WhatsApp.</p>
+    <a href="#calendly-placeholder" class="btn btn-primary btn-lg">Book Appointment</a>
+    <p class="cta-sub">
+      Or <a href="https://wa.me/918884007530" class="text-link">WhatsApp us</a>
+    </p>
+
+    <!-- Calendly embed goes here -->
+    <div id="calendly-placeholder" class="calendly-placeholder" aria-label="Calendly booking widget placeholder">
+      <span>Calendly widget loads here</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER — imported verbatim from homepage index.html.
+     Do not edit here; edit the homepage source and sync.
+     ============================================================ -->
+<footer id="site-footer" class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-col">
+      <a href="/" class="brand brand-footer" aria-label="Swastha Healthcare — Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Swastha Healthcare</span>
+      </a>
+      <p class="footer-tag">Trusted Obstetrics, Gynaecology &amp; Pulmonology care in Padmanabhanagar.</p>
+      <ul class="social-row" aria-label="Social links">
+        <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></li>
+        <li><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V6.5A1.5 1.5 0 0 1 15.5 5H17V2h-2.5A4.5 4.5 0 0 0 10 6.5V9H7v3h3v10h4V12h3l1-3z"/></svg></a></li>
+        <li><a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></a></li>
+        <li><a href="https://wa.me/918884007530" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-3.5-6.6L20 4l-1.4 3.5A8 8 0 0 1 20 12z"/><path d="M9 9c0 3 3 6 6 6l1.5-1.5-2-1-1 1c-1 0-2-1-2-2l1-1-1-2z"/></svg></a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#specialties">Specialties</a></li>
+        <li><a href="/#doctors">Doctors</a></li>
+        <li><a href="/#clinics">Our Clinics</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="#cta">Book Appointment</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Key Services</h4>
+      <ul class="footer-links">
+        <li><a href="/#specialties">Consultation (Obs &amp; Gynae)</a></li>
+        <li><a href="/#specialties">IUI / IVF / ICSI</a></li>
+        <li><a href="/#specialties">High-Risk Pregnancy</a></li>
+        <li><a href="/#specialties">Laparoscopy / Hysteroscopy</a></li>
+        <li><a href="/#specialties">Preconception Counselling</a></li>
+        <li><a href="/#specialties">Pulmonology Consultation</a></li>
+        <li><a href="/#specialties">Sleep Study</a></li>
+        <li><a href="/#specialties">Asthma &amp; COPD</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <address class="footer-contact">
+        <p><strong>Swastha Fertility Centre</strong><br />
+        277, MK Puttalingaiah Road, Gururaja Layout, Padmanabhanagar, Bengaluru — 560070</p>
+        <p><strong>Swastha Healthcare</strong><br />
+        MK No.6-9, MVS Arcade, Puttalingaiah Road, Kadarenahalli, Padmanabhanagar, Bengaluru — 560070</p>
+        <p>
+          <a href="tel:+918884007530">88840 07530</a><br />
+          <a href="mailto:info@swasthaivf.com">info@swasthaivf.com</a><br />
+          <a href="https://wa.me/918884007530">WhatsApp us</a>
+        </p>
+      </address>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>&copy; <span id="year">2026</span> Swastha Healthcare. All rights reserved.</p>
+      <p><a href="/privacy-policy">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- Homepage JS (sticky header, drawer, counter, carousel) -->
+<script src="../script.js"></script>
+
+<!-- ============================================================
+     CLINIC_DATA — swap this object to render either clinic.
+     Everything on the page reads from here.
+     ============================================================ -->
+<script id="clinic-data">
+const CLINIC_DATA = {
+  name: "Swastha Healthcare",
+  slug: "swastha-healthcare",
+  url: "/clinics/swastha-healthcare",
+  tagline: "Obstetrics, Gynaecology and Pulmonology under one roof.",
+  overview: "A multi-specialty neighbourhood clinic in Padmanabhanagar bringing together women's health and respiratory care in one calm, unhurried space.",
+  address: "MK No.6-9, MVS Arcade, Puttalingaiah Road, Kadarenahalli, Padmanabhanagar, Bengaluru — 560070",
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent("Swastha Healthcare, MVS Arcade, Puttalingaiah Road, Kadarenahalli, Padmanabhanagar, Bengaluru 560070"),
+  specialties: ["Obstetrics & Gynaecology", "Pulmonology & Respiratory Care"],
+  services: [
+    // Obstetrics & Gynaecology — 7
+    { specialty: "Obstetrics & Gynaecology", name: "Consultation", description: "Routine women's health and gynaecology consults." },
+    { specialty: "Obstetrics & Gynaecology", name: "Antenatal & Postnatal Care", description: "Structured care through pregnancy and after delivery." },
+    { specialty: "Obstetrics & Gynaecology", name: "High-Risk Pregnancy", description: "Close monitoring for medically complex pregnancies." },
+    { specialty: "Obstetrics & Gynaecology", name: "IUI / IVF / ICSI", description: "Assisted-reproduction support tailored to your case." },
+    { specialty: "Obstetrics & Gynaecology", name: "Laparoscopy & Hysteroscopy", description: "Minimally-invasive gynaecological procedures." },
+    { specialty: "Obstetrics & Gynaecology", name: "Preconception Counselling", description: "Planning ahead for a healthier pregnancy." },
+    { specialty: "Obstetrics & Gynaecology", name: "Menopause & Midlife Care", description: "Guidance and treatment through peri-menopause and after." },
+    // Pulmonology & Respiratory Care — 10
+    { specialty: "Pulmonology & Respiratory Care", name: "Pulmonology Consultation", description: "Diagnosis and management of respiratory conditions." },
+    { specialty: "Pulmonology & Respiratory Care", name: "Asthma Management", description: "Long-term asthma control and step-up/down planning." },
+    { specialty: "Pulmonology & Respiratory Care", name: "COPD Management", description: "Structured care for chronic obstructive pulmonary disease." },
+    { specialty: "Pulmonology & Respiratory Care", name: "Sleep Study", description: "Overnight studies to assess sleep-related breathing." },
+    { specialty: "Pulmonology & Respiratory Care", name: "Sleep Apnoea Care", description: "CPAP titration and follow-up for OSA." },
+    { specialty: "Pulmonology & Respiratory Care", name: "Pulmonary Function Testing (PFT)", description: "Spirometry and lung-volume assessment." },
+    { specialty: "Pulmonology & Respiratory Care", name: "Chronic Cough Evaluation", description: "Root-cause workup for persistent cough." },
+    { specialty: "Pulmonology & Respiratory Care", name: "Allergy Evaluation", description: "Assessment of respiratory allergies and triggers." },
+    { specialty: "Pulmonology & Respiratory Care", name: "Tuberculosis Care", description: "Diagnosis, treatment and follow-up support." },
+    { specialty: "Pulmonology & Respiratory Care", name: "Bronchoscopy Consultation", description: "Assessment and referral for bronchoscopic procedures." },
+  ],
+  highlights: [
+    { icon: "shield", label: "Hygiene-first environment", description: "Clinical-grade cleanliness across every room." },
+    { icon: "team",   label: "Experienced multi-specialty team", description: "Consultants with decades of combined experience." },
+    { icon: "tools",  label: "Modern diagnostics on-site", description: "PFT, sleep study and ultrasound available in-clinic." }
+  ],
+  hours: "Mon – Fri: 9:00 AM – 8:00 PM   ·   Sat: 9:00 AM – 6:00 PM   ·   Sun: 10:00 AM – 1:00 PM"
+};
+
+// -----------------------------------------------------------------
+// To render Clinic A (Swastha Fertility Centre), replace CLINIC_DATA above
+// with:
+//
+// const CLINIC_DATA = {
+//   name: "Swastha Fertility Centre",
+//   slug: "swastha-fertility-centre",
+//   url: "/clinics/swastha-fertility-centre",
+//   tagline: "Fertility, Obstetrics & Gynaecology in Padmanabhanagar.",
+//   overview: "A dedicated Obstetrics & Gynaecology clinic focused on fertility, pregnancy and women's health, close to home.",
+//   address: "277, MK Puttalingaiah Road, Gururaja Layout, Padmanabhanagar, Bengaluru — 560070",
+//   mapsUrl: "https://www.google.com/maps/search/?api=1&query=" +
+//     encodeURIComponent("Swastha Fertility Centre, 277 MK Puttalingaiah Road, Gururaja Layout, Padmanabhanagar, Bengaluru 560070"),
+//   specialties: ["Obstetrics & Gynaecology"],
+//   services: [
+//     { specialty: "Obstetrics & Gynaecology", name: "Consultation", description: "Routine women's health and gynaecology consults." },
+//     { specialty: "Obstetrics & Gynaecology", name: "Antenatal & Postnatal Care", description: "Structured care through pregnancy and after delivery." },
+//     { specialty: "Obstetrics & Gynaecology", name: "High-Risk Pregnancy", description: "Close monitoring for medically complex pregnancies." },
+//     { specialty: "Obstetrics & Gynaecology", name: "IUI / IVF / ICSI", description: "Assisted-reproduction support tailored to your case." },
+//     { specialty: "Obstetrics & Gynaecology", name: "Laparoscopy & Hysteroscopy", description: "Minimally-invasive gynaecological procedures." },
+//     { specialty: "Obstetrics & Gynaecology", name: "Preconception Counselling", description: "Planning ahead for a healthier pregnancy." },
+//     { specialty: "Obstetrics & Gynaecology", name: "Menopause & Midlife Care", description: "Guidance and treatment through peri-menopause and after." }
+//   ],
+//   highlights: [ ...same three highlights or clinic-specific... ],
+//   hours: "Mon – Sat: 9:00 AM – 8:00 PM · Sun: closed"
+// };
+// -----------------------------------------------------------------
+</script>
+
+<!-- Render logic -->
+<script src="./clinic.js"></script>
+</body>
+</html>

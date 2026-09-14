@@ -1,0 +1,215 @@
+/* ============================================================
+   Clinic sub-page — extends styles.css (tokens inherited).
+   ============================================================ */
+
+/* Breadcrumbs */
+.breadcrumbs {
+  background: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  padding: 14px 0;
+  color: var(--color-text-muted);
+}
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs li + li::before {
+  content: "›";
+  margin: 0 6px 0 0;
+  color: var(--color-text-muted);
+}
+.breadcrumbs a {
+  color: var(--color-text-muted);
+  transition: color var(--transition);
+}
+.breadcrumbs a:hover { color: var(--color-primary); }
+.breadcrumbs [aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Hero — reuse homepage layout with tag-row-lg for pills under H1 */
+.clinic-hero {
+  padding: var(--space-8) 0;
+  background: linear-gradient(180deg, var(--color-bg-alt) 0%, #fff 100%);
+  position: relative;
+  overflow: hidden;
+}
+.tag-row-lg {
+  margin: 0 0 var(--space-5);
+  padding: 0;
+}
+.tag-row-lg .tag {
+  font-size: 0.85rem;
+  padding: 6px 14px;
+}
+
+/* About + highlights */
+.clinic-about { padding: var(--space-8) 0; }
+.highlight-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+.highlight-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.highlight-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.highlight-icon {
+  width: 48px; height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-3);
+}
+.highlight-card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.highlight-card p { color: var(--color-text-muted); font-size: 0.92rem; margin: 0; }
+
+/* Services */
+.clinic-services { padding: var(--space-8) 0; background: var(--color-bg-alt); }
+.service-group + .service-group { margin-top: var(--space-7); }
+.service-group-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+.service-group-heading h3 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+.service-group-heading .rule {
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+.service-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+.service-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+.service-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: transparent;
+}
+.service-card h4 {
+  font-size: 1rem;
+  margin: 0 0 6px;
+  color: var(--color-text);
+}
+.service-card p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  flex: 1;
+  margin: 0 0 var(--space-3);
+}
+.service-card .link-arrow { font-size: 0.85rem; }
+
+/* Doctors — reuse .doctor-grid + .doctor-card from styles.css */
+.clinic-doctors { padding: var(--space-8) 0; }
+.section-foot {
+  margin-top: var(--space-6);
+  text-align: center;
+}
+
+/* Location */
+.clinic-location { padding: var(--space-8) 0; background: var(--color-bg-alt); }
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+.location-info {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+.location-info h3 {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: var(--space-5) 0 var(--space-2);
+  font-weight: 700;
+}
+.location-info h3:first-child { margin-top: 0; }
+.location-info p {
+  margin: 0 0 var(--space-3);
+  line-height: 1.55;
+}
+.location-info a { color: var(--color-primary); }
+.location-info a:hover { text-decoration: underline; }
+.location-info .btn { margin-top: var(--space-4); }
+.location-info address { font-style: normal; margin: 0; }
+.opening-hours { color: var(--color-text); }
+
+.clinic-map {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-primary-soft), #efe6f7);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.map-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: var(--space-4);
+  text-align: center;
+}
+.map-placeholder small {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  max-width: 340px;
+}
+.clinic-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .highlight-grid { grid-template-columns: repeat(3, 1fr); }
+  .service-grid   { grid-template-columns: repeat(2, 1fr); }
+  .location-grid  { grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+  .clinic-hero,
+  .clinic-about,
+  .clinic-services,
+  .clinic-doctors,
+  .clinic-location { padding: var(--space-9) 0; }
+
+  .service-grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+}
